@@ -22,6 +22,7 @@ Route::get('/trip/{id}', [TripController::class, 'detail'])->name('trip.detail')
 
 // Booking Routes
 Route::middleware('auth')->prefix('booking')->group(function () {
+    Route::get('/check-availability', [BookingController::class, 'checkAvailability'])->name('booking.check_availability');
     Route::get('/create/{trip_id}', [BookingController::class, 'create'])->name('booking.create');
     Route::post('/store', [BookingController::class, 'store'])->name('booking.store');
     Route::get('/{id}/confirmation', [BookingController::class, 'confirmation'])->name('booking.confirmation');
@@ -29,6 +30,9 @@ Route::middleware('auth')->prefix('booking')->group(function () {
     Route::get('/{id}', [BookingController::class, 'show'])->name('booking.show');
     Route::post('/{id}/cancel', [BookingController::class, 'cancel'])->name('booking.cancel');
 });
+
+// Wishlist Web Route
+Route::middleware('auth')->get('/wishlist', [App\Http\Controllers\WishlistController::class, 'webIndex'])->name('wishlist.index');
 
 // Midtrans Webhook - CSRF Exception (dikecualikan di VerifyCsrfToken.php)
 Route::post('/midtrans-webhook', [BookingController::class, 'handleNotification'])->name('midtrans.webhook');

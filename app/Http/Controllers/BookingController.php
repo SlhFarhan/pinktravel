@@ -27,7 +27,8 @@ class BookingController extends Controller
     public function create($tripId)
     {
         $trip = Trip::findOrFail($tripId);
-        $availableSeats = $this->bookingService->getAvailableSeats($tripId);
+        // Di awal belum ada tanggal dipilih, jadi kita lempar kuota maksimal
+        $availableSeats = $trip->kuota;
 
         return view('booking.create', [
             'trip' => $trip,
@@ -43,7 +44,7 @@ class BookingController extends Controller
         $validated = $request->validate([
             'trip_id' => 'required|exists:trips,id',
             'participants' => 'required|integer|min:1',
-            'preferred_date' => 'nullable|date|after_or_equal:today',
+            'preferred_date' => 'required|date|after_or_equal:today',
             'phone' => 'required|string|min:10|max:15',
             'special_request' => 'nullable|string|max:500',
         ]);
@@ -58,9 +59,27 @@ class BookingController extends Controller
 
             return redirect()->route('booking.confirmation', $booking->id);
         } catch (\Exception $e) {
-            return back()->with('error', $e->getMessage());
+            return back()->withInput()->with('error', $e->getMessage());
         }
     }
+
+    /**
+     * Cek ketersediaan kursi via AJAX
+     */
+    public function checkAvailability(Request $request)
+    {
+        $request->validate([
+            'trip_id' => 'required|exists:trips,id',
+            'date' => 'required|date'
+        ]);
+
+        $availableSeats = $this->bookingService->getAvailableSeatsForDate($request->trip_id, $request->date);
+
+        return response()->json([
+            'available_seats' => $availableSeats
+        ]);
+    }
+
 
     /**
      * Show booking confirmation page
@@ -165,7 +184,12 @@ class BookingController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        return view('booking.show', ['booking' => $booking]);
+        $hasReviewed = \App\Models\Review::where('user_id', auth()->id())
+            ->where('reviewable_type', 'App\Models\Trip')
+            ->where('reviewable_id', $booking->trip_id)
+            ->exists();
+
+        return view('booking.show', ['booking' => $booking, 'hasReviewed' => $hasReviewed]);
     }
 
     /**

@@ -6,6 +6,10 @@
         <span class="text-gray-300">Edit: {{ Str::limit($trip->title, 40) }}</span>
     </nav>
 
+    {{-- Leaflet CSS --}}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+
     <form method="POST" action="{{ route('admin.trips.update', $trip->id) }}" enctype="multipart/form-data">
         @csrf @method('PUT')
 
@@ -50,7 +54,7 @@
 
                 <div class="bg-gray-900 border border-white/5 rounded-2xl p-6">
                     <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Titik Kumpul</h3>
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-2 gap-4 mb-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-300 mb-1.5">Nama Titik Kumpul</label>
                             <input type="text" name="meeting_point" value="{{ old('meeting_point', $trip->meeting_point) }}"
@@ -60,6 +64,34 @@
                             <label class="block text-sm font-medium text-gray-300 mb-1.5">Alamat Lengkap</label>
                             <input type="text" name="meeting_address" value="{{ old('meeting_address', $trip->meeting_address) }}"
                                    class="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 transition" required>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-1.5">Pin Lokasi Peta <span class="text-xs text-gray-500 font-normal">(Cari nama tempat atau geser pin merah)</span></label>
+                        
+                        <!-- Pencarian Peta -->
+                        <div class="flex gap-2 mb-3">
+                            <input type="text" id="map-search-input" placeholder="Ketik nama tempat/kota untuk mencari..." class="flex-1 px-4 py-2.5 bg-gray-800 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition" autocomplete="off">
+                            <button type="button" id="map-search-btn" class="px-5 py-2.5 bg-gray-800 hover:bg-gray-700 border border-white/10 text-white text-sm font-medium rounded-xl transition flex items-center gap-2 whitespace-nowrap">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                Cari Lokasi
+                            </button>
+                        </div>
+
+                        <div id="map" class="w-full h-72 rounded-xl border border-white/10 mb-3 relative z-0 shadow-inner"></div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-medium text-gray-500 mb-1">Latitude</label>
+                                <input type="text" id="latitude" name="latitude" value="{{ old('latitude', $trip->latitude) }}" readonly
+                                       class="w-full px-3 py-2 bg-gray-800/50 border border-white/5 rounded-lg text-gray-400 text-sm focus:outline-none cursor-not-allowed font-mono">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-gray-500 mb-1">Longitude</label>
+                                <input type="text" id="longitude" name="longitude" value="{{ old('longitude', $trip->longitude) }}" readonly
+                                       class="w-full px-3 py-2 bg-gray-800/50 border border-white/5 rounded-lg text-gray-400 text-sm focus:outline-none cursor-not-allowed font-mono">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -170,6 +202,102 @@
         };
         reader.readAsDataURL(input.files[0]);
     }
+
+    // --- Peta Interaktif Leaflet ---
+    document.addEventListener('DOMContentLoaded', function() {
+        // Default center point: Jakarta (Monas)
+        const defaultLat = -6.1753924;
+        const defaultLng = 106.8271528;
+        
+        const latInput = document.getElementById('latitude');
+        const lngInput = document.getElementById('longitude');
+
+        // Initialize map
+        const map = L.map('map').setView([
+            latInput.value ? latInput.value : defaultLat, 
+            lngInput.value ? lngInput.value : defaultLng
+        ], 13);
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        // Create draggable marker
+        const marker = L.marker([
+            latInput.value ? latInput.value : defaultLat, 
+            lngInput.value ? lngInput.value : defaultLng
+        ], { draggable: true }).addTo(map);
+
+        // Update inputs when marker is dragged
+        marker.on('dragend', function(event) {
+            const position = marker.getLatLng();
+            latInput.value = position.lat.toFixed(8);
+            lngInput.value = position.lng.toFixed(8);
+        });
+
+        // Update marker when map is clicked
+        map.on('click', function(event) {
+            marker.setLatLng(event.latlng);
+            latInput.value = event.latlng.lat.toFixed(8);
+            lngInput.value = event.latlng.lng.toFixed(8);
+        });
+
+        // Search Location Logic
+        const searchBtn = document.getElementById('map-search-btn');
+        const searchInput = document.getElementById('map-search-input');
+
+        async function searchLocation() {
+            const query = searchInput.value.trim();
+            if (!query) return;
+
+            const btnOriginalHTML = searchBtn.innerHTML;
+            searchBtn.innerHTML = '<span class="animate-pulse">Mencari...</span>';
+            searchBtn.disabled = true;
+
+            try {
+                // Gunakan Nominatim API dari OpenStreetMap
+                const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`);
+                const data = await response.json();
+
+                if (data && data.length > 0) {
+                    const lat = parseFloat(data[0].lat);
+                    const lon = parseFloat(data[0].lon);
+                    
+                    // Fly to location with animation
+                    map.flyTo([lat, lon], 16, { duration: 1.5 });
+                    marker.setLatLng([lat, lon]);
+                    
+                    latInput.value = lat.toFixed(8);
+                    lngInput.value = lon.toFixed(8);
+                } else {
+                    alert('Lokasi tidak ditemukan. Coba gunakan nama kota atau jalan yang lebih spesifik.');
+                }
+            } catch (error) {
+                console.error('Error searching location:', error);
+                alert('Terjadi kesalahan saat mencari lokasi.');
+            } finally {
+                searchBtn.innerHTML = btnOriginalHTML;
+                searchBtn.disabled = false;
+            }
+        }
+
+        searchBtn.addEventListener('click', searchLocation);
+        
+        // Prevent form submission when pressing enter on search input
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                searchLocation();
+            }
+        });
+
+        // Fix leaflet map rendering bug in hidden/flex layouts
+        setTimeout(() => map.invalidateSize(), 500);
+    });
     </script>
 
+    {{-- Leaflet JS --}}
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </x-admin-layout>

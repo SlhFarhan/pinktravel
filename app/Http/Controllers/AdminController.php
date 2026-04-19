@@ -70,6 +70,8 @@ class AdminController extends Controller
             'image'           => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'status'          => 'required|in:active,inactive',
             'kuota'           => 'nullable|integer|min:1',
+            'latitude'        => 'nullable|numeric',
+            'longitude'       => 'nullable|numeric',
         ]);
 
         // Handle file upload
@@ -142,6 +144,8 @@ class AdminController extends Controller
             'image'           => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'status'          => 'required|in:active,inactive',
             'kuota'           => 'nullable|integer|min:1',
+            'latitude'        => 'nullable|numeric',
+            'longitude'       => 'nullable|numeric',
         ]);
 
         // Ambil path lama dari URL storage

@@ -13,9 +13,9 @@
         <style></style>
     @endif
 </head>
-<body class="font-poppins bg-gray-50 text-gray-900">
-    <div class="pt-16">
-        <x-navbar></x-navbar>
+<body class="font-poppins bg-gray-50/50 text-gray-900">
+    <div>
+        <x-navbar :always-scrolled="true"></x-navbar>
 
         <div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
             <div class="max-w-6xl mx-auto">

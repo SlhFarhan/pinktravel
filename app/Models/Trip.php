@@ -21,6 +21,9 @@ class Trip extends Model
         'duration_days',
         'image',
         'status',
+        'kuota',
+        'latitude',
+        'longitude',
     ];
 
     protected $casts = [

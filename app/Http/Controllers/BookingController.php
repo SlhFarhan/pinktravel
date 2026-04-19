@@ -91,16 +91,20 @@ class BookingController extends Controller
     }
 
     /**
-     * Handle notifikasi dari Midtrans
+     * Handle notifikasi dari Midtrans.
+     * Verifikasi signature dilakukan pertama kali untuk mencegah notifikasi palsu.
      */
     public function handleNotification(Request $request)
     {
         $notification = $request->all();
 
         try {
-            $result = $this->midtransService->handleNotification($notification);
+            // Verifikasi signature key dari Midtrans sebelum memproses apapun
+            $this->midtransService->verifySignature($notification);
+
+            $result  = $this->midtransService->handleNotification($notification);
             $orderId = $result['order_id'];
-            $status = $result['status'];
+            $status  = $result['status'];
 
             // Cari booking berdasarkan order_id
             $booking = Booking::where('order_id', $orderId)->firstOrFail();
@@ -130,12 +134,33 @@ class BookingController extends Controller
     }
 
     /**
+     * Dashboard user — ringkasan booking dan statistik
+     */
+    public function userDashboard()
+    {
+        $user     = auth()->user();
+        $bookings = $user->bookings()->with('trip')->latest()->get();
+
+        $stats = [
+            'total'     => $bookings->count(),
+            'pending'   => $bookings->where('status', 'pending')->count(),
+            'confirmed' => $bookings->where('status', 'confirmed')->count(),
+            'completed' => $bookings->where('status', 'completed')->count(),
+            'cancelled' => $bookings->where('status', 'cancelled')->count(),
+        ];
+
+        $recentBookings = $bookings->take(5);
+
+        return view('user.dashboard', compact('user', 'stats', 'recentBookings'));
+    }
+
+    /**
      * Show booking detail
      */
     public function show($bookingId)
     {
         $booking = Booking::with(['trip', 'user', 'paymentTransaction'])->findOrFail($bookingId);
-        
+
         if (auth()->id() !== $booking->user_id) {
             abort(403, 'Unauthorized');
         }
@@ -144,19 +169,25 @@ class BookingController extends Controller
     }
 
     /**
-     * Cancel booking
+     * Cancel booking.
+     * Hanya booking dengan status 'pending' atau 'confirmed' yang dapat dibatalkan.
      */
     public function cancel($bookingId)
     {
         $booking = Booking::findOrFail($bookingId);
-        
+
         if (auth()->id() !== $booking->user_id) {
             abort(403, 'Unauthorized');
         }
 
+        // Batasi pembatalan hanya untuk status pending/confirmed
+        if (! in_array($booking->status, ['pending', 'confirmed'])) {
+            return back()->with('error', 'Booking dengan status "' . $booking->status . '" tidak dapat dibatalkan.');
+        }
+
         try {
             $this->bookingService->cancelBooking($booking);
-            return back()->with('success', 'Booking dibatalkan.');
+            return back()->with('success', 'Booking berhasil dibatalkan.');
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }

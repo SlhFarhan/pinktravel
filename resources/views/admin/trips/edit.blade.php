@@ -1,136 +1,175 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Edit Trip - PinkTravel Admin</title>
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=poppins:300,400,500,600,700" rel="stylesheet" />
-    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @else
-        <style></style>
-    @endif
-</head>
-<body class="font-poppins bg-gray-50 text-gray-900">
-    <!-- Navbar -->
-    <nav class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <a href="/" class="text-2xl font-bold text-gray-900">
-                    ✈️ PinkTravel Admin
-                </a>
-            </div>
-        </div>
+<x-admin-layout title="Edit Trip" active="trips">
+
+    <nav class="flex items-center gap-2 text-sm text-gray-500 mb-6">
+        <a href="{{ route('admin.dashboard') }}" class="hover:text-white transition">Dashboard</a>
+        <span>/</span>
+        <span class="text-gray-300">Edit: {{ Str::limit($trip->title, 40) }}</span>
     </nav>
 
-    <div class="pt-20">
-        <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-6">
-                <a href="{{ route('admin.dashboard') }}" class="text-teal-600 hover:text-teal-800 font-medium">
-                    ← Kembali ke Dashboard
+    <form method="POST" action="{{ route('admin.trips.update', $trip->id) }}" enctype="multipart/form-data">
+        @csrf @method('PUT')
+
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+
+            {{-- ── Kiri ─────────────────────────────────────────────── --}}
+            <div class="xl:col-span-2 space-y-5">
+
+                <div class="bg-gray-900 border border-white/5 rounded-2xl p-6">
+                    <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-5">Informasi Trip</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-1.5">Judul Trip <span class="text-pink-500">*</span></label>
+                            <input type="text" name="title" value="{{ old('title', $trip->title) }}"
+                                   class="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition" required>
+                            @error('title')<p class="text-red-400 text-xs mt-1">{{ $message }}</p>@enderror
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-1.5">Kota Keberangkatan <span class="text-pink-500">*</span></label>
+                                <input type="text" name="departure_city" value="{{ old('departure_city', $trip->departure_city) }}"
+                                       class="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 transition" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-1.5">Destinasi <span class="text-pink-500">*</span></label>
+                                <input type="text" name="destination" value="{{ old('destination', $trip->destination) }}"
+                                       class="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 transition" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-1.5">Deskripsi <span class="text-pink-500">*</span></label>
+                            <textarea name="description" rows="3"
+                                      class="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 transition resize-none" required>{{ old('description', $trip->description) }}</textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-1.5">Overview <span class="text-pink-500">*</span></label>
+                            <textarea name="overview" rows="4"
+                                      class="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 transition resize-none" required>{{ old('overview', $trip->overview) }}</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-900 border border-white/5 rounded-2xl p-6">
+                    <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Titik Kumpul</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-1.5">Nama Titik Kumpul</label>
+                            <input type="text" name="meeting_point" value="{{ old('meeting_point', $trip->meeting_point) }}"
+                                   class="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 transition" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-1.5">Alamat Lengkap</label>
+                            <input type="text" name="meeting_address" value="{{ old('meeting_address', $trip->meeting_address) }}"
+                                   class="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 transition" required>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {{-- ── Kanan ────────────────────────────────────────────── --}}
+            <div class="space-y-5">
+
+                {{-- Gambar --}}
+                <div class="bg-gray-900 border border-white/5 rounded-2xl p-6">
+                    <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Foto Trip</h3>
+                    <div class="relative rounded-xl overflow-hidden bg-gray-800 cursor-pointer group"
+                         onclick="document.getElementById('imageInput').click()">
+                        @if($trip->image)
+                            <img id="imagePreview" src="{{ $trip->image }}" alt="{{ $trip->title }}"
+                                 class="w-full h-44 object-cover">
+                        @else
+                            <div id="imagePreview" class="w-full h-44 flex items-center justify-center bg-gray-800">
+                                <svg class="w-10 h-10 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                        @endif
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition">
+                            <p class="text-white text-sm font-medium">🖼 Ganti Foto</p>
+                        </div>
+                    </div>
+                    <input type="file" id="imageInput" name="image" accept="image/*" class="hidden"
+                           onchange="previewImage(this)">
+                    <p class="text-xs text-gray-600 mt-2 text-center">Biarkan kosong untuk mempertahankan foto lama</p>
+                    @error('image')<p class="text-red-400 text-xs mt-1">{{ $message }}</p>@enderror
+                </div>
+
+                {{-- Harga & Kapasitas --}}
+                <div class="bg-gray-900 border border-white/5 rounded-2xl p-6">
+                    <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Harga & Kapasitas</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-1.5">Harga per Orang (Rp) <span class="text-pink-500">*</span></label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">Rp</span>
+                                <input type="number" name="price" value="{{ old('price', $trip->price) }}" min="0"
+                                       class="w-full pl-10 pr-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 transition" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-1.5">Durasi (Hari) <span class="text-pink-500">*</span></label>
+                            <input type="number" name="duration_days" value="{{ old('duration_days', $trip->duration_days) }}" min="1"
+                                   class="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 transition" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-1.5">Kuota</label>
+                            <input type="number" name="kuota" value="{{ old('kuota', $trip->kuota) }}" min="1"
+                                   placeholder="Kosongkan = tak terbatas"
+                                   class="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-pink-500 transition">
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Status --}}
+                <div class="bg-gray-900 border border-white/5 rounded-2xl p-6">
+                    <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Publikasi</h3>
+                    <div class="space-y-2">
+                        <label class="flex items-center gap-3 p-3 rounded-xl border border-white/10 cursor-pointer has-[:checked]:border-emerald-500/50 has-[:checked]:bg-emerald-500/5 transition">
+                            <input type="radio" name="status" value="active" {{ old('status', $trip->status) === 'active' ? 'checked' : '' }} class="accent-emerald-500">
+                            <div>
+                                <p class="text-sm font-medium text-white">Aktif</p>
+                                <p class="text-xs text-gray-500">Tampil di website</p>
+                            </div>
+                        </label>
+                        <label class="flex items-center gap-3 p-3 rounded-xl border border-white/10 cursor-pointer has-[:checked]:border-gray-500/50 has-[:checked]:bg-gray-500/5 transition">
+                            <input type="radio" name="status" value="inactive" {{ old('status', $trip->status) === 'inactive' ? 'checked' : '' }} class="accent-gray-500">
+                            <div>
+                                <p class="text-sm font-medium text-white">Nonaktif</p>
+                                <p class="text-xs text-gray-500">Disembunyikan</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit"
+                        class="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-pink-600 hover:bg-pink-500 text-white font-semibold rounded-xl transition shadow-lg shadow-pink-600/20">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    Simpan Perubahan
+                </button>
+                <a href="{{ route('admin.dashboard') }}"
+                   class="block w-full text-center px-6 py-3 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white font-medium rounded-xl transition">
+                    Batal
                 </a>
             </div>
-
-            <div class="bg-white rounded-lg shadow p-8">
-                <h1 class="text-3xl font-bold text-gray-900 mb-6">Edit Trip</h1>
-
-                <form method="POST" action="{{ route('admin.trips.update', $trip->id) }}">
-                    @csrf
-                    @method('PUT')
-
-                    <!-- Title -->
-                    <div class="mb-6">
-                        <label class="block text-gray-700 font-semibold mb-2">Judul Trip</label>
-                        <input type="text" name="title" value="{{ old('title', $trip->title) }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600" required>
-                        @error('title')<span class="text-red-600 text-sm">{{ $message }}</span>@enderror
-                    </div>
-
-                    <!-- Departure City -->
-                    <div class="grid grid-cols-2 gap-4 mb-6">
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-2">Kota Keberangkatan</label>
-                            <input type="text" name="departure_city" value="{{ old('departure_city', $trip->departure_city) }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600" required>
-                            @error('departure_city')<span class="text-red-600 text-sm">{{ $message }}</span>@enderror
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-2">Tujuan</label>
-                            <input type="text" name="destination" value="{{ old('destination', $trip->destination) }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600" required>
-                            @error('destination')<span class="text-red-600 text-sm">{{ $message }}</span>@enderror
-                        </div>
-                    </div>
-
-                    <!-- Description -->
-                    <div class="mb-6">
-                        <label class="block text-gray-700 font-semibold mb-2">Deskripsi</label>
-                        <textarea name="description" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600" required>{{ old('description', $trip->description) }}</textarea>
-                        @error('description')<span class="text-red-600 text-sm">{{ $message }}</span>@enderror
-                    </div>
-
-                    <!-- Overview -->
-                    <div class="mb-6">
-                        <label class="block text-gray-700 font-semibold mb-2">Overview</label>
-                        <textarea name="overview" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600" required>{{ old('overview', $trip->overview) }}</textarea>
-                        @error('overview')<span class="text-red-600 text-sm">{{ $message }}</span>@enderror
-                    </div>
-
-                    <!-- Meeting Point -->
-                    <div class="mb-6">
-                        <label class="block text-gray-700 font-semibold mb-2">Titik Kumpul</label>
-                        <input type="text" name="meeting_point" value="{{ old('meeting_point', $trip->meeting_point) }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600" required>
-                        @error('meeting_point')<span class="text-red-600 text-sm">{{ $message }}</span>@enderror
-                    </div>
-
-                    <!-- Meeting Address -->
-                    <div class="mb-6">
-                        <label class="block text-gray-700 font-semibold mb-2">Alamat Kumpul</label>
-                        <input type="text" name="meeting_address" value="{{ old('meeting_address', $trip->meeting_address) }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600" required>
-                        @error('meeting_address')<span class="text-red-600 text-sm">{{ $message }}</span>@enderror
-                    </div>
-
-                    <!-- Price & Duration -->
-                    <div class="grid grid-cols-2 gap-4 mb-6">
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-2">Harga (Rp)</label>
-                            <input type="number" name="price" value="{{ old('price', $trip->price) }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600" required>
-                            @error('price')<span class="text-red-600 text-sm">{{ $message }}</span>@enderror
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-2">Durasi (Hari)</label>
-                            <input type="number" name="duration_days" value="{{ old('duration_days', $trip->duration_days) }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600" required>
-                            @error('duration_days')<span class="text-red-600 text-sm">{{ $message }}</span>@enderror
-                        </div>
-                    </div>
-
-                    <!-- Image URL -->
-                    <div class="mb-6">
-                        <label class="block text-gray-700 font-semibold mb-2">Image URL</label>
-                        <input type="url" name="image" value="{{ old('image', $trip->image) }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600" required>
-                        @error('image')<span class="text-red-600 text-sm">{{ $message }}</span>@enderror
-                    </div>
-
-                    <!-- Status -->
-                    <div class="mb-6">
-                        <label class="block text-gray-700 font-semibold mb-2">Status</label>
-                        <select name="status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600" required>
-                            <option value="active" {{ old('status', $trip->status) === 'active' ? 'selected' : '' }}>Active</option>
-                            <option value="inactive" {{ old('status', $trip->status) === 'inactive' ? 'selected' : '' }}>Inactive</option>
-                        </select>
-                        @error('status')<span class="text-red-600 text-sm">{{ $message }}</span>@enderror
-                    </div>
-
-                    <!-- Submit -->
-                    <div class="flex gap-4">
-                        <button type="submit" class="bg-teal-600 text-white px-8 py-3 rounded-lg hover:bg-teal-700 transition font-semibold">
-                            Update Trip
-                        </button>
-                        <a href="{{ route('admin.dashboard') }}" class="bg-gray-300 text-gray-900 px-8 py-3 rounded-lg hover:bg-gray-400 transition font-semibold">
-                            Batal
-                        </a>
-                    </div>
-                </form>
-            </div>
         </div>
-    </div>
-</body>
-</html>
+    </form>
+
+    <script>
+    function previewImage(input) {
+        if (!input.files[0]) return;
+        const reader = new FileReader();
+        reader.onload = e => {
+            const preview = document.getElementById('imagePreview');
+            if (preview.tagName === 'IMG') {
+                preview.src = e.target.result;
+            } else {
+                preview.outerHTML = `<img id="imagePreview" src="${e.target.result}" alt="Preview" class="w-full h-44 object-cover">`;
+            }
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+    </script>
+
+</x-admin-layout>

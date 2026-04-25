@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            CompanySettingSeeder::class,
+            CategorySeeder::class,
             DestinationSeeder::class,
             TripSeeder::class,
             ReviewSeeder::class,

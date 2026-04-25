@@ -97,7 +97,18 @@ class DestinationSeeder extends Seeder
         ];
 
         foreach ($destinations as $destination) {
-            Destination::create($destination);
+            $categoryName = $destination['category'];
+            unset($destination['category']);
+            
+            $category = \App\Models\Category::where('category_name', $categoryName)
+                ->where('category_type', 1)
+                ->first();
+
+            Destination::create(array_merge($destination, [
+                'category_id' => $category ? $category->id : null,
+                'category'    => $categoryName,
+                'status'      => 'active'
+            ]));
         }
     }
 }

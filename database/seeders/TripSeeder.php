@@ -6,6 +6,8 @@ use App\Models\Trip;
 use App\Models\TripItinerary;
 use App\Models\TripInclude;
 use App\Models\TripExclude;
+use App\Models\TripDate;
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 
 class TripSeeder extends Seeder
@@ -58,7 +60,20 @@ class TripSeeder extends Seeder
                 'status' => 'active',
             ]);
 
-            // Itinerary Day 1: Perjalanan & Arrival
+            $dates = [
+                ['date' => now()->addDays(14)->format('Y-m-d'), 'kuota' => 10],
+                ['date' => now()->addDays(21)->format('Y-m-d'), 'kuota' => 15],
+                ['date' => now()->addDays(28)->format('Y-m-d'), 'kuota' => 12],
+            ];
+
+            foreach ($dates as $date) {
+                TripDate::create([
+                    'trip_id' => $trip->id,
+                    'date' => $date['date'],
+                    'kuota' => $date['kuota'],
+                ]);
+            }
+
             TripItinerary::create([
                 'trip_id' => $trip->id,
                 'day_number' => 1,
@@ -125,9 +140,15 @@ class TripSeeder extends Seeder
             ];
 
             foreach ($includes as $include) {
+                $category = Category::where('category_name', $include['category'])
+                    ->where('category_type', 2)
+                    ->first();
+
                 TripInclude::create([
-                    'trip_id' => $trip->id,
-                    ...$include,
+                    'trip_id'     => $trip->id,
+                    'item_name'   => $include['item_name'],
+                    'category'    => $include['category'],
+                    'category_id' => $category ? $category->id : null,
                 ]);
             }
 
@@ -142,9 +163,15 @@ class TripSeeder extends Seeder
             ];
 
             foreach ($excludes as $exclude) {
+                $category = Category::where('category_name', $exclude['category'])
+                    ->where('category_type', 3)
+                    ->first();
+
                 TripExclude::create([
-                    'trip_id' => $trip->id,
-                    ...$exclude,
+                    'trip_id'     => $trip->id,
+                    'item_name'   => $exclude['item_name'],
+                    'category'    => $exclude['category'],
+                    'category_id' => $category ? $category->id : null,
                 ]);
             }
         }

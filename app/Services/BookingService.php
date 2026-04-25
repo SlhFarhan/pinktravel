@@ -70,10 +70,6 @@ class BookingService
                 'confirmed_at' => now(),
             ]);
 
-            // Update kuota trip
-            $trip = $booking->trip;
-            $trip->increment('booked', $booking->participants);
-
             // Send confirmation email
             try {
                 Mail::send(new BookingConfirmed($booking));

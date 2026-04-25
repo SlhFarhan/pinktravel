@@ -69,7 +69,7 @@ class AdminController extends Controller
             'duration_days'   => 'required|integer|min:1',
             'image'           => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'status'          => 'required|in:active,inactive',
-            'kuota'           => 'nullable|integer|min:1',
+            'kuota'           => 'required|integer|min:1',
             'latitude'        => 'nullable|numeric',
             'longitude'       => 'nullable|numeric',
         ]);
@@ -143,7 +143,7 @@ class AdminController extends Controller
             'duration_days'   => 'required|integer|min:1',
             'image'           => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'status'          => 'required|in:active,inactive',
-            'kuota'           => 'nullable|integer|min:1',
+            'kuota'           => 'required|integer|min:1',
             'latitude'        => 'nullable|numeric',
             'longitude'       => 'nullable|numeric',
         ]);
@@ -196,11 +196,13 @@ class AdminController extends Controller
     public function storeDestination(Request $request)
     {
         $validated = $request->validate([
-            'name'        => 'required|string|max:255',
-            'description' => 'required|string',
-            'location'    => 'required|string',
-            'image'       => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
-            'status'      => 'required|in:active,inactive',
+            'name'             => 'required|string|max:255',
+            'description'      => 'required|string',
+            'interesting_fact' => 'required|string',
+            'category'         => 'required|string',
+            'location'         => 'required|string',
+            'image'            => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'status'           => 'required|in:active,inactive',
         ]);
 
         $imagePath = $this->handleImageUpload($request, 'image');
@@ -221,11 +223,13 @@ class AdminController extends Controller
         $destination = Destination::findOrFail($id);
 
         $validated = $request->validate([
-            'name'        => 'required|string|max:255',
-            'description' => 'required|string',
-            'location'    => 'required|string',
-            'image'       => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
-            'status'      => 'required|in:active,inactive',
+            'name'             => 'required|string|max:255',
+            'description'      => 'required|string',
+            'interesting_fact' => 'required|string',
+            'category'         => 'required|string',
+            'location'         => 'required|string',
+            'image'            => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'status'           => 'required|in:active,inactive',
         ]);
 
         $oldPath = null;

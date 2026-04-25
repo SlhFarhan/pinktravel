@@ -138,13 +138,13 @@
                                     <div>
                                         <label class="block text-xs font-medium text-gray-500 mb-1">Judul Hari</label>
                                         <input type="text" name="itineraries[0][title]" placeholder="e.g. Keberangkatan & Tiba"
-                                               class="w-full px-3 py-2 bg-gray-700 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-pink-500 transition">
+                                               class="w-full px-3 py-2 bg-gray-700 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-pink-500 transition" required>
                                         <input type="hidden" name="itineraries[0][day_number]" value="1">
                                     </div>
                                     <div>
                                         <label class="block text-xs font-medium text-gray-500 mb-1">Deskripsi</label>
                                         <input type="text" name="itineraries[0][description]" placeholder="Aktivitas hari ini..."
-                                               class="w-full px-3 py-2 bg-gray-700 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-pink-500 transition">
+                                               class="w-full px-3 py-2 bg-gray-700 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-pink-500 transition" required>
                                     </div>
                                 </div>
                                 <button type="button" onclick="removeItem(this, '.itinerary-item')" class="text-gray-600 hover:text-red-400 mt-2 transition flex-shrink-0">
@@ -173,7 +173,7 @@
                         <div id="includes" class="space-y-2">
                             <div class="include-item flex items-center gap-2">
                                 <input type="text" name="includes[0][item_name]" placeholder="e.g. Tiket Pesawat"
-                                       class="flex-1 px-3 py-2 bg-gray-800 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-emerald-500 transition">
+                                       class="flex-1 px-3 py-2 bg-gray-800 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-emerald-500 transition" required>
                                 <input type="hidden" name="includes[0][category]" value="general">
                                 <button type="button" onclick="removeItem(this, '.include-item')" class="text-gray-600 hover:text-red-400 transition">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -198,7 +198,7 @@
                         <div id="excludes" class="space-y-2">
                             <div class="exclude-item flex items-center gap-2">
                                 <input type="text" name="excludes[0][item_name]" placeholder="e.g. Tips Guide"
-                                       class="flex-1 px-3 py-2 bg-gray-800 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-red-500 transition">
+                                       class="flex-1 px-3 py-2 bg-gray-800 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-red-500 transition" required>
                                 <input type="hidden" name="excludes[0][category]" value="general">
                                 <button type="button" onclick="removeItem(this, '.exclude-item')" class="text-gray-600 hover:text-red-400 transition">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -259,10 +259,10 @@
                             @error('duration_days')<p class="text-red-400 text-xs mt-1">{{ $message }}</p>@enderror
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-1.5">Kuota Peserta</label>
+                            <label class="block text-sm font-medium text-gray-300 mb-1.5">Kuota Peserta <span class="text-pink-500">*</span></label>
                             <input type="number" name="kuota" value="{{ old('kuota') }}" min="1"
-                                   placeholder="Kosongkan untuk tak terbatas"
-                                   class="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition">
+                                   placeholder="e.g. 20"
+                                   class="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition" required>
                             @error('kuota')<p class="text-red-400 text-xs mt-1">{{ $message }}</p>@enderror
                         </div>
                     </div>
@@ -333,13 +333,13 @@
                         <div>
                             <label class="block text-xs font-medium text-gray-500 mb-1">Judul Hari</label>
                             <input type="text" name="itineraries[${idx}][title]" placeholder="e.g. Snorkeling & Pantai"
-                                   class="w-full px-3 py-2 bg-gray-700 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-pink-500 transition">
+                                   class="w-full px-3 py-2 bg-gray-700 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-pink-500 transition" required>
                             <input type="hidden" name="itineraries[${idx}][day_number]" value="${idx + 1}">
                         </div>
                         <div>
                             <label class="block text-xs font-medium text-gray-500 mb-1">Deskripsi</label>
                             <input type="text" name="itineraries[${idx}][description]" placeholder="Aktivitas hari ini..."
-                                   class="w-full px-3 py-2 bg-gray-700 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-pink-500 transition">
+                                   class="w-full px-3 py-2 bg-gray-700 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-pink-500 transition" required>
                         </div>
                     </div>
                     <button type="button" onclick="removeItem(this, '.itinerary-item')" class="text-gray-600 hover:text-red-400 mt-2 transition flex-shrink-0">
@@ -357,7 +357,7 @@
         container.insertAdjacentHTML('beforeend', `
             <div class="include-item flex items-center gap-2">
                 <input type="text" name="includes[${includeCount}][item_name]" placeholder="e.g. Akomodasi"
-                       class="flex-1 px-3 py-2 bg-gray-800 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-emerald-500 transition">
+                       class="flex-1 px-3 py-2 bg-gray-800 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-emerald-500 transition" required>
                 <input type="hidden" name="includes[${includeCount}][category]" value="general">
                 <button type="button" onclick="removeItem(this, '.include-item')" class="text-gray-600 hover:text-red-400 transition">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -373,7 +373,7 @@
         container.insertAdjacentHTML('beforeend', `
             <div class="exclude-item flex items-center gap-2">
                 <input type="text" name="excludes[${excludeCount}][item_name]" placeholder="e.g. Tips Guide"
-                       class="flex-1 px-3 py-2 bg-gray-800 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-red-500 transition">
+                       class="flex-1 px-3 py-2 bg-gray-800 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-red-500 transition" required>
                 <input type="hidden" name="excludes[${excludeCount}][category]" value="general">
                 <button type="button" onclick="removeItem(this, '.exclude-item')" class="text-gray-600 hover:text-red-400 transition">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

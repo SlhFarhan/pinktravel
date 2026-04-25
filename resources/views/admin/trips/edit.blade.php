@@ -144,10 +144,10 @@
                                    class="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 transition" required>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-1.5">Kuota</label>
+                            <label class="block text-sm font-medium text-gray-300 mb-1.5">Kuota <span class="text-pink-500">*</span></label>
                             <input type="number" name="kuota" value="{{ old('kuota', $trip->kuota) }}" min="1"
-                                   placeholder="Kosongkan = tak terbatas"
-                                   class="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-pink-500 transition">
+                                   placeholder="e.g. 20"
+                                   class="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-pink-500 transition" required>
                         </div>
                     </div>
                 </div>

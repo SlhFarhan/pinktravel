@@ -29,6 +29,18 @@
                             @error('location')<p class="text-red-400 text-xs mt-1">{{ $message }}</p>@enderror
                         </div>
                         <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-1.5">Kategori <span class="text-pink-500">*</span></label>
+                            <input type="text" name="category" value="{{ old('category', $destination->category) }}"
+                                   class="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 transition" required>
+                            @error('category')<p class="text-red-400 text-xs mt-1">{{ $message }}</p>@enderror
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-1.5">Fakta Menarik <span class="text-pink-500">*</span></label>
+                            <textarea name="interesting_fact" rows="3"
+                                      class="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 transition resize-none" required>{{ old('interesting_fact', $destination->interesting_fact) }}</textarea>
+                            @error('interesting_fact')<p class="text-red-400 text-xs mt-1">{{ $message }}</p>@enderror
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-300 mb-1.5">Deskripsi <span class="text-pink-500">*</span></label>
                             <textarea name="description" rows="6"
                                       class="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 transition resize-none" required>{{ old('description', $destination->description) }}</textarea>

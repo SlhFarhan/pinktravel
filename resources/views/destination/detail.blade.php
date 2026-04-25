@@ -13,15 +13,12 @@
         @endif
     </head>
     <body class="font-poppins bg-white text-gray-900">
-        <!-- Navbar Component -->
         <div>
             <x-navbar></x-navbar>
 
-            <!-- Hero Section with Destination Image -->
             <section class="relative h-[60vh] min-h-[500px] bg-gray-900 overflow-hidden flex items-end pb-16">
                 <div class="absolute inset-0">
                     <img src="{{ $destination->image }}" alt="{{ $destination->name }}" class="w-full h-full object-cover">
-                    <!-- Gradient Overlays -->
                     <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80"></div>
                     <div class="absolute inset-0 bg-gradient-to-r from-pink-900/30 via-transparent to-transparent"></div>
                 </div>
@@ -46,11 +43,9 @@
                 </div>
             </section>
 
-            <!-- Detail Section -->
             <section class="py-24 px-4 bg-gray-50/50">
                 <div class="max-w-4xl mx-auto">
 
-                    <!-- Description -->
                     <div class="bg-white rounded-[2rem] p-8 md:p-10 mb-8 border border-gray-100 shadow-sm">
                         <h2 class="text-3xl font-extrabold text-gray-900 mb-6 tracking-tight">Tentang <span class="text-pink-600">Destinasi Ini</span></h2>
                         <p class="text-lg text-gray-600 leading-relaxed">
@@ -58,7 +53,6 @@
                         </p>
                     </div>
 
-                    <!-- Interesting Fact -->
                     <div class="bg-gradient-to-br from-pink-50 to-rose-50 rounded-[2rem] p-8 md:p-10 mb-8 border border-pink-100 shadow-sm relative overflow-hidden">
                         <div class="absolute top-0 right-0 -mt-8 -mr-8 w-32 h-32 bg-pink-200/50 rounded-full blur-2xl"></div>
                         <h2 class="text-2xl font-extrabold text-gray-900 mb-6 relative z-10 flex items-center gap-3">
@@ -70,7 +64,6 @@
                         </p>
                     </div>
 
-                    <!-- CTA Section -->
                     <div class="bg-gray-900 rounded-[2rem] p-10 mb-16 shadow-xl shadow-gray-900/20 text-center relative overflow-hidden">
                         <div class="absolute inset-0 bg-gradient-to-r from-pink-900/20 to-transparent"></div>
                         <h2 class="text-3xl font-extrabold text-white mb-4 relative z-10 tracking-tight">Ingin Mengunjungi Destinasi Ini?</h2>
@@ -87,18 +80,15 @@
                         </div>
                     </div>
 
-                    <!-- Reviews Section -->
                     <div class="mt-12">
                         <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-12 tracking-tight text-center">Apa Kata <span class="text-pink-600">Traveler?</span></h2>
                         
                         <div class="grid grid-cols-1 gap-12">
-                            <!-- Reviews List -->
                             <div>
                                 <div id="reviews-list" class="space-y-6 mb-16">
                                     <p class="text-gray-500 text-center py-8">Memuat ulasan...</p>
                                 </div>
 
-                                <!-- Review Form or Login CTA -->
                                 @auth
                                     @if(isset($hasReviewed) && !$hasReviewed)
                                     <div class="bg-gray-50 rounded-[2rem] p-8 md:p-10 border border-gray-100 shadow-sm relative overflow-hidden">
@@ -158,7 +148,6 @@
             </section>
         </div>
 
-        <!-- Footer Component -->
         <x-footer></x-footer>
 
         <script>

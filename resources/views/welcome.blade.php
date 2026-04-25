@@ -6,11 +6,9 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
-        <!-- Styles / Scripts -->
         @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
             @vite(['resources/css/app.css', 'resources/js/app.js'])
         @else
@@ -18,10 +16,8 @@
         @endif
     </head>
     <body class="bg-white dark:bg-gray-900">
-        <!-- Navbar Component -->
         <x-navbar></x-navbar>
 
-        <!-- Hero Section -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <div class="text-center">
                 <h1 class="text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-4">

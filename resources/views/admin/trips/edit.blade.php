@@ -68,7 +68,6 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-300 mb-1.5">Pin Lokasi Peta <span class="text-xs text-gray-500 font-normal">(Cari nama tempat atau geser pin merah)</span></label>
                         
-                        <!-- Pencarian Peta -->
                         <div class="flex gap-2 mb-3">
                             <input type="text" id="map-search-input" placeholder="Ketik nama tempat/kota untuk mencari..." class="flex-1 px-4 py-2.5 bg-gray-800 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition" autocomplete="off">
                             <button type="button" id="map-search-btn" class="px-5 py-2.5 bg-gray-800 hover:bg-gray-700 border border-white/10 text-white text-sm font-medium rounded-xl transition flex items-center gap-2 whitespace-nowrap">

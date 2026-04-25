@@ -13,11 +13,9 @@
         @endif
     </head>
     <body class="font-poppins bg-gray-50/50 text-gray-900">
-        <!-- Navbar Component -->
         <div>
             <x-navbar :always-scrolled="true"></x-navbar>
 
-            <!-- Main Content -->
             <section class="py-20 px-4 bg-gray-50 min-h-screen">
                 <div class="max-w-6xl mx-auto">
                     <div class="mb-8">
@@ -41,7 +39,6 @@
                             @foreach ($bookings as $booking)
                                 <div class="bg-white rounded-lg border border-gray-200 hover:shadow-lg transition overflow-hidden">
                                     <div class="p-6 flex items-center justify-between">
-                                        <!-- Left Content -->
                                         <div class="flex-1">
                                             <div class="mb-3">
                                                 <div class="flex items-center gap-3 mb-2">
@@ -80,7 +77,6 @@
                                             </div>
                                         </div>
 
-                                        <!-- Actions -->
                                         <div class="ml-6 flex gap-2">
                                             <a 
                                                 href="{{ route('booking.show', $booking->id) }}"
@@ -97,7 +93,6 @@
                 </div>
             </section>
 
-            <!-- Footer -->
             <x-footer></x-footer>
         </div>
     </body>

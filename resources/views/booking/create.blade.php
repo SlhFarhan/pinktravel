@@ -13,15 +13,12 @@
         @endif
     </head>
     <body class="font-poppins bg-gray-50/50 text-gray-900">
-        <!-- Navbar Component -->
         <div>
             <x-navbar :always-scrolled="true"></x-navbar>
 
-            <!-- Main Content -->
             <section class="pt-32 pb-24 px-4 min-h-screen">
                 <div class="max-w-5xl mx-auto">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-                        <!-- Booking Form -->
                         <div class="lg:col-span-2">
                             <div class="bg-white rounded-[2rem] p-8 md:p-10 border border-gray-100 shadow-sm relative overflow-hidden">
                                 <div class="absolute top-0 right-0 w-64 h-64 bg-pink-100/30 rounded-full blur-3xl -mt-20 -mr-20 pointer-events-none"></div>
@@ -50,7 +47,6 @@
 
                                     <input type="hidden" name="trip_id" value="{{ $trip->id }}">
 
-                                    <!-- Trip Info -->
                                     <div class="bg-gradient-to-br from-pink-50 to-rose-50 border border-pink-100 rounded-[1.5rem] p-6 mb-8 relative overflow-hidden">
                                         <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-pink-200/50 rounded-full blur-xl pointer-events-none"></div>
                                         <h3 class="text-lg font-extrabold text-gray-900 mb-4 flex items-center gap-2 relative z-10">
@@ -80,7 +76,6 @@
                                         </div>
                                     </div>
 
-                                    <!-- Participants -->
                                     <div>
                                         <label for="participants" class="block text-sm font-bold text-gray-700 mb-3">Jumlah Peserta</label>
                                         <input 
@@ -99,7 +94,6 @@
                                         <p id="max-participants-text" class="text-gray-500 text-sm mt-2 font-medium">Silakan pilih tanggal keberangkatan terlebih dahulu untuk melihat ketersediaan kursi.</p>
                                     </div>
 
-                                    <!-- Preferred Date -->
                                     <div>
                                         <label for="preferred_date" class="block text-sm font-bold text-gray-700 mb-3">Tanggal Perjalanan yang Diinginkan</label>
                                         <select 
@@ -121,7 +115,6 @@
                                         <p class="text-gray-500 text-sm mt-2 font-medium">Hanya tanggal di atas yang tersedia untuk paket trip ini.</p>
                                     </div>
 
-                                    <!-- Phone Number -->
                                     <div>
                                         <label for="phone" class="block text-sm font-bold text-gray-700 mb-3">Nomor Telepon Kontak</label>
                                         <input 
@@ -139,7 +132,6 @@
                                         <p class="text-gray-500 text-sm mt-2 font-medium">Untuk konfirmasi dan komunikasi perjalanan</p>
                                     </div>
 
-                                    <!-- Special Request -->
                                     <div>
                                         <label for="special_request" class="block text-sm font-bold text-gray-700 mb-3">Catatan atau Permintaan Khusus</label>
                                         <textarea 
@@ -155,7 +147,6 @@
                                         <p class="text-gray-500 text-sm mt-2 font-medium">Opsional - Beri tahu kami jika ada kebutuhan khusus</p>
                                     </div>
 
-                                    <!-- Total Price Display -->
                                     <div class="bg-gray-50 border border-gray-200 rounded-[1.5rem] p-6 mb-6">
                                         <div class="flex justify-between items-center">
                                             <span class="text-gray-600 font-bold">Subtotal Estimasi</span>
@@ -163,7 +154,6 @@
                                         </div>
                                     </div>
 
-                                    <!-- Terms -->
                                     <div class="mb-6">
                                         <label class="flex items-start gap-3 cursor-pointer group">
                                             <div class="relative flex items-center justify-center mt-1">
@@ -183,9 +173,7 @@
                                         </label>
                                     </div>
 
-                                    <!-- Action Buttons -->
                                     <div class="flex gap-4">
-                                        <!-- Back Button -->
                                         <a 
                                             href="{{ route('trip.detail', $trip->id) }}" 
                                             class="w-1/3 flex items-center justify-center py-4 px-6 border-2 border-gray-200 rounded-2xl font-bold text-gray-600 hover:text-gray-900 hover:bg-gray-50 hover:border-gray-300 transition-all"
@@ -193,7 +181,6 @@
                                             Batal
                                         </a>
 
-                                        <!-- Submit Button -->
                                         <button 
                                             type="submit" 
                                             id="submit-btn"
@@ -207,7 +194,6 @@
                             </div>
                         </div>
 
-                        <!-- Trip Info Sidebar -->
                         <div class="lg:col-span-1">
                             <div class="bg-white rounded-[2rem] p-6 md:p-8 border border-gray-100 shadow-xl shadow-gray-100/50 sticky top-28">
                                 <div class="relative rounded-[1.5rem] overflow-hidden mb-6 group">
@@ -247,11 +233,9 @@
                 </div>
             </section>
 
-            <!-- Footer -->
             <x-footer></x-footer>
         </div>
 
-        <!-- Script untuk calculate total & availability -->
         <script>
             const tripId = {{ $trip->id }};
             const pricePerPerson = {{ $trip->price }};

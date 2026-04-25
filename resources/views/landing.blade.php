@@ -68,30 +68,23 @@
         </style>
     </head>
     <body class="font-poppins bg-white text-gray-900">
-        <!-- Navbar Component -->
         <div>
             <x-navbar></x-navbar>
 
-            <!-- Hero Section -->
             <section id="beranda" class="relative min-h-screen flex items-center justify-center overflow-hidden">
-                <!-- Background Image -->
                 <div class="absolute inset-0">
                     <img src="/images/hero-travel.png" alt="Keindahan Indonesia" class="w-full h-full object-cover scale-105 hero-zoom">
-                    <!-- Gradient Overlay -->
                     <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70"></div>
                     <div class="absolute inset-0 bg-gradient-to-r from-pink-900/30 via-transparent to-transparent"></div>
                 </div>
 
-                <!-- Floating particles -->
                 <div class="absolute inset-0 overflow-hidden pointer-events-none">
                     <div class="particle particle-1"></div>
                     <div class="particle particle-2"></div>
                     <div class="particle particle-3"></div>
                 </div>
 
-                <!-- Content -->
                 <div class="relative z-10 max-w-5xl mx-auto px-4 text-center">
-                    <!-- Badge -->
                     <div class="hero-fade-1 inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white text-sm font-medium mb-8">
                         <span class="w-2 h-2 bg-pink-400 rounded-full animate-pulse"></span>
                         Open Trip Tersedia — Ni Banda Neira
@@ -120,7 +113,6 @@
                         </a>
                     </div>
 
-                    <!-- Floating Stats -->
                     <div class="hero-fade-5 grid grid-cols-3 gap-4 max-w-lg mx-auto">
                         <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-3 text-center">
                             <p class="text-2xl font-bold text-white">500+</p>
@@ -137,7 +129,6 @@
                     </div>
                 </div>
 
-                <!-- Scroll Indicator -->
                 <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 animate-bounce">
                     <span class="text-white/50 text-xs">Scroll</span>
                     <svg class="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -146,15 +137,12 @@
                 </div>
             </section>
 
-            <!-- Explore Banda Neira Section - Featured Destination -->
             <section class="relative py-24 px-4 bg-white overflow-hidden">
-                <!-- Decorative Blur -->
                 <div class="absolute top-0 right-0 -mt-32 -mr-32 w-96 h-96 bg-pink-400/20 rounded-full blur-[100px] pointer-events-none"></div>
                 <div class="absolute bottom-0 left-0 -mb-32 -ml-32 w-96 h-96 bg-rose-400/20 rounded-full blur-[100px] pointer-events-none"></div>
 
                 <div class="relative max-w-7xl mx-auto">
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                        <!-- Left Content -->
                         <div class="reveal">
                             <span class="inline-flex items-center gap-2 px-4 py-2 bg-pink-50 border border-pink-100 text-pink-600 rounded-full text-sm font-bold mb-6 tracking-wide uppercase">
                                 ✨ Featured Destination
@@ -174,7 +162,6 @@
                             </a>
                         </div>
 
-                        <!-- Right Image -->
                         <div class="reveal relative">
                             <div class="absolute inset-0 bg-gradient-to-tr from-pink-500 to-rose-400 rounded-[2.5rem] transform rotate-3 scale-105 opacity-20 blur-xl"></div>
                             <div class="relative rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/50">
@@ -185,7 +172,6 @@
                 </div>
             </section>
 
-            <!-- Trips Section -->
             <section id="trips" class="py-24 px-4 bg-gray-50/50 border-t border-gray-100">
                 <div class="max-w-7xl mx-auto">
                     <div class="text-center mb-16 reveal">
@@ -193,23 +179,18 @@
                         <p class="text-lg text-gray-500">Pilih kota keberangkatan Anda untuk memulai perjalanan</p>
                     </div>
 
-                    <!-- Trips Carousel -->
                     <div class="relative flex items-center gap-4">
-                        <!-- Left Button -->
                         <button onclick="previousTripSlide()" class="flex-shrink-0 p-3 rounded-full border border-gray-300 hover:bg-gray-100 hover:border-pink-600 transition">
                             <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                             </svg>
                         </button>
 
-                        <!-- Carousel Content -->
                         <div class="trips-carousel-container overflow-hidden flex-1">
                             <div class="trips-carousel-track flex transition-transform duration-500 ease-in-out" id="tripsCarouselTrack">
-                                <!-- Trip slides loaded via JavaScript -->
                             </div>
                         </div>
 
-                        <!-- Right Button -->
                         <button onclick="nextTripSlide()" class="flex-shrink-0 p-3 rounded-full border border-gray-300 hover:bg-gray-100 hover:border-pink-600 transition">
                             <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -217,14 +198,11 @@
                         </button>
                     </div>
 
-                    <!-- Trip Carousel Dots -->
                     <div class="flex items-center justify-center gap-2 mt-8" id="tripCarouselDots">
-                        <!-- Dots loaded via JavaScript -->
                     </div>
                 </div>
             </section>
 
-            <!-- Destinasi Section -->
             <section id="destinasi" class="py-24 px-4 bg-white border-t border-gray-100">
                 <div class="max-w-7xl mx-auto">
                     <div class="text-center mb-16 reveal">
@@ -232,23 +210,18 @@
                         <p class="text-lg text-gray-500">Jelajahi berbagai destinasi menarik selain Banda Neira</p>
                     </div>
 
-                    <!-- Carousel Container -->
                     <div class="relative flex items-center gap-4">
-                        <!-- Left Button -->
                         <button onclick="previousSlide()" class="flex-shrink-0 p-3 rounded-full border border-gray-300 hover:bg-gray-100 hover:border-pink-600 transition">
                             <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                             </svg>
                         </button>
 
-                        <!-- Carousel Content -->
                         <div class="carousel-container overflow-hidden flex-1">
                             <div class="carousel-track flex transition-transform duration-500 ease-in-out" id="carouselTrack">
-                                <!-- Slides loaded via JavaScript -->
                             </div>
                         </div>
 
-                        <!-- Right Button -->
                         <button onclick="nextSlide()" class="flex-shrink-0 p-3 rounded-full border border-gray-300 hover:bg-gray-100 hover:border-pink-600 transition">
                             <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -256,14 +229,11 @@
                         </button>
                     </div>
 
-                    <!-- Carousel Dots - Bottom Center -->
                     <div class="flex items-center justify-center gap-2 mt-8" id="carouselDots">
-                        <!-- Dots loaded via JavaScript -->
                     </div>
                 </div>
             </section>
 
-            <!-- Testimonials Section -->
             <section class="py-24 px-4 bg-gray-50/50 border-t border-gray-100">
                 <div class="max-w-7xl mx-auto">
                     <div class="text-center mb-16 reveal">
@@ -277,7 +247,6 @@
                 </div>
             </section>
 
-            <!-- Features Section -->
             <section class="py-24 px-4 bg-white border-t border-gray-100">
                 <div class="max-w-7xl mx-auto">
                     <div class="text-center mb-16 reveal">
@@ -329,10 +298,8 @@
                 </div>
             </section>
 
-            <!-- CTA Section -->
             <section class="relative py-24 px-4 overflow-hidden">
                 <div class="absolute inset-0 bg-gray-900"></div>
-                <!-- Decorative Elements -->
                 <div class="absolute top-0 right-0 w-[40rem] h-[40rem] bg-pink-600/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3"></div>
                 <div class="absolute bottom-0 left-0 w-[30rem] h-[30rem] bg-rose-500/20 rounded-full blur-[80px] translate-y-1/3 -translate-x-1/4"></div>
                 
@@ -354,7 +321,6 @@
             </section>
         </div>
 
-        <!-- Footer Component -->
         <footer id="kontak" class="bg-gray-900 text-gray-300">
             <x-footer></x-footer>
         </footer>

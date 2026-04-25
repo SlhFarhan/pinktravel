@@ -11,10 +11,8 @@
 </head>
 <body class="font-poppins bg-gray-50/50 text-gray-900 min-h-screen flex flex-col">
 
-    <!-- Navbar -->
     <x-navbar alwaysScrolled="true"></x-navbar>
 
-    <!-- Main Content -->
     <main class="flex-grow pt-28 pb-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
@@ -47,19 +45,16 @@
                         @endphp
                         
                         <div class="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col h-full" id="wishlist-item-{{ $wishlist->id }}">
-                            <!-- Image -->
                             <div class="relative h-56 overflow-hidden">
                                 <img src="{{ $item->image }}" alt="{{ $isTrip ? $item->title : $item->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                                 
-                                <!-- Tags -->
                                 <div class="absolute top-4 left-4">
                                     <span class="px-3 py-1 bg-white/20 backdrop-blur-md text-white text-xs font-bold rounded-full border border-white/30 shadow-sm">
                                         {{ $isTrip ? 'Trip Package' : 'Destinasi' }}
                                     </span>
                                 </div>
 
-                                <!-- Remove Button -->
                                 <button onclick="removeWishlist({{ $wishlist->id }})" class="absolute top-4 right-4 w-10 h-10 bg-white/20 hover:bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:text-red-500 border border-white/30 transition-all duration-300">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -78,7 +73,6 @@
                                 @endif
                             </div>
                             
-                            <!-- Content -->
                             <div class="p-6 flex flex-col flex-grow">
                                 <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-2">{{ $isTrip ? $item->title : $item->name }}</h3>
                                 <p class="text-gray-500 text-sm mb-4 line-clamp-2">{{ $item->description }}</p>
@@ -97,7 +91,6 @@
         </div>
     </main>
 
-    <!-- Footer -->
     <x-footer></x-footer>
 
     <script>

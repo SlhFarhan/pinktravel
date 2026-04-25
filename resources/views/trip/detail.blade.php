@@ -18,15 +18,12 @@
         @endif
     </head>
     <body class="font-poppins bg-white text-gray-900">
-        <!-- Navbar Component -->
         <div>
             <x-navbar></x-navbar>
 
-            <!-- Hero Section with Trip Image -->
             <section class="relative h-[60vh] min-h-[500px] bg-gray-900 overflow-hidden flex items-end pb-16">
                 <div class="absolute inset-0">
                     <img src="{{ $trip->image }}" alt="{{ $trip->title }}" class="w-full h-full object-cover">
-                    <!-- Gradient Overlays -->
                     <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80"></div>
                     <div class="absolute inset-0 bg-gradient-to-r from-pink-900/30 via-transparent to-transparent"></div>
                 </div>
@@ -51,20 +48,16 @@
                 </div>
             </section>
 
-            <!-- Main Content -->
             <section class="py-24 px-4 bg-gray-50/50">
                 <div class="max-w-7xl mx-auto">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-                        <!-- Main Content Column -->
                         <div class="lg:col-span-2">
-                            <!-- Overview -->
                             <div class="bg-white rounded-[2rem] p-8 md:p-10 mb-8 border border-gray-100 shadow-sm">
                                 <h2 class="text-3xl font-extrabold text-gray-900 mb-6 tracking-tight">Tentang <span class="text-pink-600">Paket Ini</span></h2>
                                 <p class="text-gray-600 leading-relaxed mb-6 text-lg">{{ $trip->description }}</p>
                                 <p class="text-gray-600 leading-relaxed text-lg">{{ $trip->overview }}</p>
                             </div>
 
-                            <!-- Meeting Point -->
                             <div class="bg-gradient-to-br from-pink-50 to-rose-50 rounded-[2rem] p-8 md:p-10 mb-8 border border-pink-100 shadow-sm relative overflow-hidden">
                                 <div class="absolute top-0 right-0 -mt-8 -mr-8 w-32 h-32 bg-pink-200/50 rounded-full blur-2xl pointer-events-none"></div>
                                 <h2 class="text-2xl font-extrabold text-gray-900 mb-6 relative z-10 flex items-center gap-3">
@@ -78,10 +71,8 @@
                                     </div>
                                     <div class="w-full h-64 md:h-80 rounded-2xl overflow-hidden shadow-inner border border-pink-200/50 bg-white relative z-0">
                                         @if($trip->latitude && $trip->longitude)
-                                            <!-- Leaflet Map Container -->
                                             <div id="map" class="w-full h-full"></div>
                                         @else
-                                            <!-- Fallback Iframe -->
                                             <iframe 
                                                 width="100%" 
                                                 height="100%" 
@@ -96,7 +87,6 @@
                                 </div>
                             </div>
 
-                            <!-- Itinerary -->
                             <div class="bg-white rounded-[2rem] p-8 md:p-10 mb-8 border border-gray-100 shadow-sm">
                                 <h2 class="text-3xl font-extrabold text-gray-900 mb-8 tracking-tight flex items-center gap-3">
                                     <span class="w-12 h-12 bg-pink-50 rounded-2xl flex items-center justify-center text-pink-500">📅</span>
@@ -130,9 +120,7 @@
                             </div>
                         </div>
 
-                        <!-- Sidebar -->
                         <div class="lg:col-span-1">
-                            <!-- Quick Info -->
                             <div class="bg-white rounded-[2rem] p-8 border border-gray-100 shadow-xl shadow-pink-50 sticky top-24">
                                 <h3 class="text-2xl font-extrabold text-gray-900 mb-8 tracking-tight">Ringkasan Paket</h3>
                                 
@@ -163,7 +151,6 @@
                                     @endauth
                                 </div>
 
-                                <!-- Includes -->
                                 <div class="mb-6 border-t border-gray-100 pt-6">
                                     <h4 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
                                         <span class="w-8 h-8 bg-green-50 text-green-500 rounded-lg flex items-center justify-center">✓</span> 
@@ -179,7 +166,6 @@
                                     </ul>
                                 </div>
 
-                                <!-- Excludes -->
                                 <div class="border-t border-gray-100 pt-6">
                                     <h4 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
                                         <span class="w-8 h-8 bg-red-50 text-red-500 rounded-lg flex items-center justify-center">✕</span> 
@@ -200,19 +186,16 @@
                 </div>
             </section>
 
-            <!-- Reviews Section -->
             <section class="py-24 px-4 bg-white border-t border-gray-100">
                 <div class="max-w-4xl mx-auto">
                     <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-12 tracking-tight text-center">Apa Kata <span class="text-pink-600">Traveler?</span></h2>
                     
                     <div class="grid grid-cols-1 gap-12">
-                        <!-- Reviews List -->
                         <div>
                             <div id="reviews-list" class="space-y-6 mb-16">
                                 <p class="text-gray-500 text-center py-8">Memuat ulasan...</p>
                             </div>
 
-                            <!-- Review Form -->
                             @if(isset($canReview) && $canReview)
                             <div class="bg-gray-50 rounded-[2rem] p-8 md:p-10 border border-gray-100 shadow-sm relative overflow-hidden mt-8">
                                 <div class="absolute top-0 right-0 w-64 h-64 bg-pink-100/50 rounded-full blur-3xl -mt-20 -mr-20 pointer-events-none"></div>
@@ -249,7 +232,6 @@
                 </div>
             </section>
 
-            <!-- Footer -->
             <x-footer></x-footer>
         </div>
 

@@ -1,7 +1,6 @@
 <footer class="bg-gray-900 text-gray-100 py-12 border-t border-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            <!-- Brand -->
             <div>
                 <h3 class="text-lg font-semibold text-white mb-4">PinkTravel</h3>
                 <p class="text-gray-400 text-sm leading-relaxed">
@@ -9,7 +8,6 @@
                 </p>
             </div>
 
-            <!-- Quick Links -->
             <div>
                 <h4 class="font-semibold text-white mb-4">Menu</h4>
                 <ul class="space-y-2 text-sm">
@@ -19,7 +17,6 @@
                 </ul>
             </div>
 
-            <!-- Information -->
             <div>
                 <h4 class="font-semibold text-white mb-4">Informasi</h4>
                 <ul class="space-y-2 text-sm">
@@ -29,7 +26,6 @@
                 </ul>
             </div>
 
-            <!-- Contact -->
             <div>
                 <h4 class="font-semibold text-white mb-4">Hubungi Kami</h4>
                 <ul class="space-y-2 text-sm">
@@ -49,7 +45,6 @@
             </div>
         </div>
 
-        <!-- Divider -->
         <div class="border-t border-gray-800 pt-8">
             <p class="text-gray-400 text-sm text-center">
                 © 2025 PinkTravel. Semua hak dilindungi.

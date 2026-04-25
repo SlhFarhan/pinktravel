@@ -13,15 +13,12 @@
         @endif
     </head>
     <body class="font-poppins bg-gray-50/50 text-gray-900">
-        <!-- Navbar Component -->
         <div>
             <x-navbar :always-scrolled="true"></x-navbar>
 
-            <!-- Main Content -->
             <section class="pt-32 pb-24 px-4 min-h-screen">
                 <div class="max-w-5xl mx-auto">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-                        <!-- Booking Details -->
                         <div class="lg:col-span-2">
                             <div class="bg-white rounded-[2rem] p-8 md:p-10 border border-gray-100 shadow-sm mb-8 relative overflow-hidden">
                                 <div class="absolute top-0 right-0 w-64 h-64 bg-green-100/30 rounded-full blur-3xl -mt-20 -mr-20 pointer-events-none"></div>
@@ -37,7 +34,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Order Details -->
                                 <div class="bg-gray-50 rounded-[1.5rem] p-6 mb-8 border border-gray-100 relative z-10">
                                     <h3 class="text-lg font-bold text-gray-900 mb-5 flex items-center gap-2">
                                         <span class="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm text-gray-500 text-sm">📋</span>
@@ -95,7 +91,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Booking Info -->
                                 <div class="bg-blue-50/50 border border-blue-100 rounded-[1.5rem] p-6 relative z-10">
                                     <h4 class="font-bold text-blue-900 mb-4 flex items-center gap-2">
                                         <span class="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm text-blue-500 text-sm">ℹ️</span>
@@ -118,7 +113,6 @@
                                 </div>
                             </div>
 
-                            <!-- Guest Info -->
                             <div class="bg-white rounded-[2rem] p-8 md:p-10 border border-gray-100 shadow-sm relative overflow-hidden">
                                 <div class="absolute top-0 right-0 w-64 h-64 bg-gray-100/50 rounded-full blur-3xl -mt-20 -mr-20 pointer-events-none"></div>
                                 <h3 class="text-2xl font-extrabold text-gray-900 mb-6 relative z-10 flex items-center gap-2">
@@ -140,7 +134,6 @@
                             </div>
                         </div>
 
-                        <!-- Payment Section -->
                         <div class="lg:col-span-1">
                             <div class="bg-white rounded-[2rem] p-6 md:p-8 border border-gray-100 shadow-xl shadow-gray-100/50 sticky top-28">
                                 <h3 class="text-2xl font-extrabold text-gray-900 mb-6 tracking-tight">Pembayaran</h3>
@@ -180,11 +173,9 @@
                 </div>
             </section>
 
-            <!-- Footer -->
             <x-footer></x-footer>
         </div>
 
-        <!-- Midtrans Snap Script -->
         <script src="{{ $snapUrl }}" data-client-key="{{ $clientKey }}"></script>
         <script>
             document.getElementById('pay-button').addEventListener('click', function () {

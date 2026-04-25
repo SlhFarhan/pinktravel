@@ -3,7 +3,6 @@
 @section('content')
 <div class="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-6xl mx-auto">
-        <!-- Header -->
         <div class="flex items-center justify-between mb-8">
             <div>
                 <h1 class="text-4xl font-bold text-gray-900">Review Management</h1>
@@ -17,7 +16,6 @@
             </div>
         </div>
 
-        <!-- Filter Tabs -->
         <div class="bg-white border-b border-gray-200 rounded-t-lg mb-6">
             <div class="flex space-x-1 px-6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -42,7 +40,6 @@
 
     <div class="pt-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Header -->
             <div class="flex justify-between items-center mb-8">
                 <div>
                     <h1 class="text-4xl font-bold text-gray-900">💬 Kelola Review & Testimonial</h1>
@@ -55,7 +52,6 @@
                 </div>
             </div>
 
-            <!-- Tabs -->
             <div class="flex gap-4 mb-8 border-b">
                 <button onclick="switchTab('pending')" id="tab-pending" class="px-4 py-2 border-b-2 border-teal-600 text-teal-600 font-semibold">
                     ⏳ Menunggu Persetujuan
@@ -68,7 +64,6 @@
                 </button>
             </div>
 
-            <!-- Reviews List -->
             <div class="bg-white rounded-lg shadow overflow-hidden">
                 <div id="reviews-list" class="divide-y">
                     <p class="text-gray-500 text-center py-8">Memuat reviews...</p>

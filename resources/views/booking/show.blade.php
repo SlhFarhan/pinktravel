@@ -13,14 +13,11 @@
         @endif
     </head>
     <body class="font-poppins bg-gray-50/50 text-gray-900">
-        <!-- Navbar Component -->
         <div>
             <x-navbar :always-scrolled="true"></x-navbar>
 
-            <!-- Main Content -->
             <section class="pt-32 pb-24 px-4 min-h-screen">
                 <div class="max-w-5xl mx-auto">
-                    <!-- Back Button -->
                     <a href="{{ route('booking.index') }}" class="text-pink-600 hover:text-pink-700 font-semibold mb-6 inline-flex items-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -29,9 +26,7 @@
                     </a>
 
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-                        <!-- Main Content -->
                         <div class="lg:col-span-2 space-y-8">
-                            <!-- Status Card -->
                             <div class="bg-white rounded-[2rem] p-8 md:p-10 border border-gray-100 shadow-sm relative overflow-hidden">
                                 <div class="absolute top-0 right-0 w-64 h-64 bg-pink-100/30 rounded-full blur-3xl -mt-20 -mr-20 pointer-events-none"></div>
                                 <div class="flex items-center justify-between mb-8 relative z-10">
@@ -68,7 +63,6 @@
                                 </div>
                             </div>
 
-                            <!-- Trip Details -->
                             <div class="bg-white rounded-[2rem] p-8 md:p-10 border border-gray-100 shadow-sm relative overflow-hidden">
                                 <div class="absolute top-0 right-0 w-64 h-64 bg-gray-100/50 rounded-full blur-3xl -mt-20 -mr-20 pointer-events-none"></div>
                                 <h2 class="text-2xl font-extrabold text-gray-900 mb-6 flex items-center gap-2 relative z-10">
@@ -112,7 +106,6 @@
                                 </div>
                             </div>
 
-                            <!-- Booking Details -->
                             <div class="bg-white rounded-[2rem] p-8 md:p-10 border border-gray-100 shadow-sm relative overflow-hidden">
                                 <h2 class="text-2xl font-extrabold text-gray-900 mb-6 flex items-center gap-2 relative z-10">
                                     <span class="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center shadow-sm text-pink-500 text-lg">📋</span>
@@ -160,7 +153,6 @@
                                 </div>
                             </div>
 
-                            <!-- Guest Info -->
                             <div class="bg-white rounded-[2rem] p-8 md:p-10 border border-gray-100 shadow-sm relative overflow-hidden">
                                 <h2 class="text-2xl font-extrabold text-gray-900 mb-6 flex items-center gap-2 relative z-10">
                                     <span class="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center shadow-sm text-gray-500 text-lg">👤</span>
@@ -181,9 +173,7 @@
                             </div>
                         </div>
 
-                        <!-- Sidebar -->
                         <div class="lg:col-span-1">
-                            <!-- Payment Status -->
                             <div class="bg-white rounded-[2rem] p-6 md:p-8 border border-gray-100 shadow-xl shadow-gray-100/50 sticky top-28 space-y-6">
                                 <h3 class="text-2xl font-extrabold text-gray-900 tracking-tight mb-2">Status Pembayaran</h3>
                                 
@@ -274,12 +264,10 @@
                 </div>
             </section>
 
-            <!-- Footer -->
             <x-footer></x-footer>
         </div>
 
         @if ($booking->status === 'completed' && !$hasReviewed)
-        <!-- Review Modal -->
         <div id="reviewModal" class="fixed inset-0 z-[100] hidden">
             <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" onclick="closeReviewModal()"></div>
             <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:p-0">
@@ -292,7 +280,6 @@
                         </div>
                         
                         <form id="reviewForm" class="space-y-6">
-                            <!-- Star Rating -->
                             <div class="flex flex-col items-center">
                                 <div class="flex items-center gap-2 flex-row-reverse justify-center" id="star-rating">
                                     <input type="radio" id="star5" name="rating" value="5" class="hidden peer" />
@@ -313,7 +300,6 @@
                                 <p id="rating-error" class="text-red-500 text-sm font-medium mt-3 hidden bg-red-50 px-3 py-1 rounded-lg">Pilih rating (bintang) terlebih dahulu</p>
                             </div>
 
-                            <!-- Comment -->
                             <div class="pt-4 border-t border-gray-100">
                                 <label class="block text-sm font-bold text-gray-700 mb-2">Ceritakan Pengalaman Anda <span class="text-gray-400 font-normal">(Opsional)</span></label>
                                 <textarea id="reviewComment" rows="4" class="w-full bg-gray-50 border border-gray-200 rounded-[1rem] px-5 py-4 focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-colors text-sm" placeholder="Apa yang Anda sukai dari perjalanan ini?"></textarea>

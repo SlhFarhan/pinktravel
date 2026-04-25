@@ -8,7 +8,6 @@
 </head>
 <body class="bg-white">
     <div class="flex h-screen">
-        <!-- Left Section - Background & Content -->
         <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-pink-600 to-pink-900 flex-col justify-center items-center text-white p-12">
             <div class="text-center">
                 <h1 class="text-5xl font-bold mb-6">Join Us Today</h1>
@@ -47,7 +46,6 @@
             </div>
         </div>
 
-        <!-- Right Section - Register Form -->
         <div class="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-12 overflow-y-auto">
             <div class="w-full max-w-md py-8">
                 <div class="text-center mb-8">

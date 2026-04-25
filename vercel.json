@@ -29,14 +29,6 @@
       "VIEW_COMPILED_PATH": "/tmp",
       "CACHE_DRIVER": "array",
       "SESSION_DRIVER": "cookie",
-      "QUEUE_CONNECTION": "sync",
-      "FILESYSTEM_DISK": "public",
-      "DB_CONNECTION": "pgsql",
-      "DB_HOST": "aws-1-ap-south-1.pooler.supabase.com",
-      "DB_PORT": "6543",
-      "DB_DATABASE": "postgres",
-      "DB_USERNAME": "postgres.abyswnuzjotkxyedrbfe",
-      "DB_PASSWORD": "bebekkejuayam",
-      "APP_KEY": "base64:zSLkO30pnr7FfUbdGka1NjDgN3d0raJn7cbxKzDJKO4="
+      "QUEUE_CONNECTION": "sync"
   }
 }

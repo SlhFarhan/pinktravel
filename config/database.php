@@ -85,7 +85,7 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL') ? (env('DATABASE_URL') . (strpos(env('DATABASE_URL'), '?') !== false ? '&' : '?') . 'options=endpoint%3D' . explode('.', parse_url(env('DATABASE_URL'), PHP_URL_HOST))[0]) : null,
+            'url' => env('DATABASE_URL'),
             'charset' => env('DB_CHARSET', 'utf8'),
             'prefix' => '',
             'prefix_indexes' => true,

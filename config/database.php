@@ -85,11 +85,14 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => env('POSTGRES_HOST', parse_url(env('DATABASE_URL'), PHP_URL_HOST)) ?: env('DB_HOST', '127.0.0.1'),
-            'port' => env('POSTGRES_PORT', parse_url(env('DATABASE_URL'), PHP_URL_PORT)) ?: env('DB_PORT', '5432'),
-            'database' => env('POSTGRES_DATABASE', ltrim(parse_url(env('DATABASE_URL'), PHP_URL_PATH), '/')) ?: env('DB_DATABASE', 'laravel'),
-            'username' => env('POSTGRES_USER', parse_url(env('DATABASE_URL'), PHP_URL_USER)) ?: env('DB_USERNAME', 'root'),
-            'password' => env('POSTGRES_PASSWORD', parse_url(env('DATABASE_URL'), PHP_URL_PASS)) ?: env('DB_PASSWORD', ''),
+            'url' => (function() {
+                $url = env('DATABASE_URL', env('POSTGRES_URL'));
+                if (!$url) return null;
+                $host = parse_url($url, PHP_URL_HOST);
+                $endpoint = explode('.', $host)[0];
+                $separator = str_contains($url, '?') ? '&' : '?';
+                return $url . $separator . 'options=endpoint%3D' . $endpoint;
+            })(),
             'charset' => env('DB_CHARSET', 'utf8'),
             'prefix' => '',
             'prefix_indexes' => true,

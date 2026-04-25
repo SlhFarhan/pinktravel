@@ -11,7 +11,6 @@
 
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
 
-            {{-- Kiri --}}
             <div class="xl:col-span-2 space-y-5">
                 <div class="bg-gray-900 border border-white/5 rounded-2xl p-6">
                     <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-5">Informasi Destinasi</h3>
@@ -55,10 +54,8 @@
                 </div>
             </div>
 
-            {{-- Kanan --}}
             <div class="space-y-5">
 
-                {{-- Upload Foto --}}
                 <div class="bg-gray-900 border border-white/5 rounded-2xl p-6">
                     <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Foto Destinasi</h3>
                     <div id="imageDropArea"
@@ -77,7 +74,6 @@
                     @error('image')<p class="text-red-400 text-xs mt-2">{{ $message }}</p>@enderror
                 </div>
 
-                {{-- Status --}}
                 <div class="bg-gray-900 border border-white/5 rounded-2xl p-6">
                     <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Publikasi</h3>
                     <div class="space-y-2">

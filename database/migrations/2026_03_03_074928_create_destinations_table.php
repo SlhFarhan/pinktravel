@@ -18,6 +18,9 @@ return new class extends Migration
             $table->text('interesting_fact');
             $table->string('category');
             $table->string('location')->nullable();
+            $table->string('image')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('set null');
             $table->timestamps();
         });
     }

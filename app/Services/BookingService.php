@@ -111,13 +111,17 @@ class BookingService
      */
     public function getAvailableSeatsForDate($tripId, $date)
     {
-        $trip = Trip::findOrFail($tripId);
+        $tripDate = \App\Models\TripDate::where('trip_id', $tripId)
+            ->where('date', $date)
+            ->first();
+
+        if (!$tripDate) return 0;
         
         $bookedOnDate = Booking::where('trip_id', $tripId)
             ->whereDate('preferred_date', $date)
             ->whereIn('status', ['pending', 'confirmed'])
             ->sum('participants');
             
-        return max(0, $trip->kuota - $bookedOnDate);
+        return max(0, $tripDate->kuota - $bookedOnDate);
     }
 }

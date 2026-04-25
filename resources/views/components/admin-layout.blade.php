@@ -12,10 +12,8 @@
 </head>
 <body class="font-poppins bg-gray-950 text-gray-100 flex min-h-screen">
 
-    {{-- ── Sidebar ────────────────────────────────────────────────── --}}
     <aside class="fixed inset-y-0 left-0 w-64 bg-gray-900 border-r border-white/5 flex flex-col z-50">
 
-        {{-- Logo --}}
         <div class="flex items-center gap-3 px-6 py-5 border-b border-white/5">
             <div class="w-9 h-9 bg-gradient-to-br from-pink-500 to-pink-700 rounded-xl flex items-center justify-center text-lg shadow-lg">✈️</div>
             <div>
@@ -24,11 +22,9 @@
             </div>
         </div>
 
-        {{-- Nav --}}
         <nav class="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
             <p class="px-4 pt-2 pb-3 text-xs font-semibold text-gray-600 uppercase tracking-wider">Menu Utama</p>
 
-            {{-- Kelola Trip --}}
             <a href="{{ route('admin.dashboard') }}"
                class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all
                       {{ $active === 'trips'
@@ -41,7 +37,6 @@
                 <span>Kelola Trip</span>
             </a>
 
-            {{-- Booking --}}
             <a href="{{ route('admin.bookings.dashboard') }}"
                class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all
                       {{ $active === 'bookings'
@@ -54,7 +49,6 @@
                 <span>Manajemen Booking</span>
             </a>
 
-            {{-- Destinasi --}}
             <a href="{{ route('admin.destinations.dashboard') }}"
                class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all
                       {{ $active === 'destinations'
@@ -69,7 +63,6 @@
                 <span>Kelola Destinasi</span>
             </a>
 
-            {{-- Review --}}
             <a href="{{ route('admin.reviews.dashboard') }}"
                class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all
                       {{ $active === 'reviews'
@@ -82,23 +75,8 @@
                 <span>Review & Testimoni</span>
             </a>
 
-            {{-- Pengaturan --}}
-            <a href="{{ route('admin.settings.dashboard') }}"
-               class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all
-                      {{ $active === 'settings'
-                            ? 'bg-pink-600 text-white shadow-lg shadow-pink-600/20'
-                            : 'text-gray-400 hover:text-white hover:bg-white/10' }}">
-                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                </svg>
-                <span>Pengaturan</span>
-            </a>
         </nav>
 
-        {{-- User Footer --}}
         <div class="px-3 py-4 border-t border-white/5">
             <div class="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 mb-2">
                 <div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500 to-pink-700 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
@@ -123,10 +101,8 @@
         </div>
     </aside>
 
-    {{-- ── Main Content ────────────────────────────────────────────── --}}
     <div class="flex-1 ml-64 flex flex-col min-h-screen">
 
-        {{-- Top Bar --}}
         <header class="sticky top-0 z-40 bg-gray-950/80 backdrop-blur-md border-b border-white/5 px-8 py-4 flex items-center justify-between">
             <div>
                 <h1 class="text-xl font-bold text-white">{{ $title }}</h1>
@@ -142,7 +118,6 @@
             </a>
         </header>
 
-        {{-- Flash Messages --}}
         @if(session('success'))
             <div class="mx-8 mt-5 flex items-center gap-3 px-5 py-3.5 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-emerald-400 text-sm">
                 <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -160,7 +135,6 @@
             </div>
         @endif
 
-        {{-- Page Slot --}}
         <main class="flex-1 px-8 py-6">
             {{ $slot }}
         </main>

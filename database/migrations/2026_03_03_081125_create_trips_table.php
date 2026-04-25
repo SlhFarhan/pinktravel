@@ -16,14 +16,16 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->text('overview')->nullable();
-            $table->string('departure_city'); // Jakarta, Surabaya, Ambon, Makassar
-            $table->string('destination'); // Banda Neira
+            $table->string('departure_city'); 
+            $table->string('destination'); 
             $table->string('meeting_point');
             $table->string('meeting_address')->nullable();
             $table->decimal('price', 12, 2);
-            $table->integer('duration_days'); // 3 days = 2 nights
+            $table->integer('duration_days'); 
             $table->string('image')->nullable();
             $table->enum('status', ['active', 'inactive', 'draft'])->default('draft');
+            $table->decimal('latitude', 10, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
             $table->timestamps();
         });
     }

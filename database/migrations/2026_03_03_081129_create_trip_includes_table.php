@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('trip_id')->constrained('trips')->onDelete('cascade');
             $table->string('item_name');
             $table->string('category');
+            $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('set null');
             $table->timestamps();
         });
     }

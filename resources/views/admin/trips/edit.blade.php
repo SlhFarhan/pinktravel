@@ -6,7 +6,6 @@
         <span class="text-gray-300">Edit: {{ Str::limit($trip->title, 40) }}</span>
     </nav>
 
-    {{-- Leaflet CSS --}}
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 
 
@@ -15,7 +14,6 @@
 
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
 
-            {{-- ── Kiri ─────────────────────────────────────────────── --}}
             <div class="xl:col-span-2 space-y-5">
 
                 <div class="bg-gray-900 border border-white/5 rounded-2xl p-6">
@@ -98,10 +96,8 @@
 
             </div>
 
-            {{-- ── Kanan ────────────────────────────────────────────── --}}
             <div class="space-y-5">
 
-                {{-- Gambar --}}
                 <div class="bg-gray-900 border border-white/5 rounded-2xl p-6">
                     <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Foto Trip</h3>
                     <div class="relative rounded-xl overflow-hidden bg-gray-800 cursor-pointer group"
@@ -126,7 +122,6 @@
                     @error('image')<p class="text-red-400 text-xs mt-1">{{ $message }}</p>@enderror
                 </div>
 
-                {{-- Harga & Kapasitas --}}
                 <div class="bg-gray-900 border border-white/5 rounded-2xl p-6">
                     <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Harga & Kapasitas</h3>
                     <div class="space-y-4">
@@ -134,25 +129,53 @@
                             <label class="block text-sm font-medium text-gray-300 mb-1.5">Harga per Orang (Rp) <span class="text-pink-500">*</span></label>
                             <div class="relative">
                                 <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">Rp</span>
-                                <input type="number" name="price" value="{{ old('price', $trip->price) }}" min="0"
+                                <input type="text" inputmode="numeric" name="price" value="{{ old('price', $trip->price) }}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                                        class="w-full pl-10 pr-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 transition" required>
                             </div>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-300 mb-1.5">Durasi (Hari) <span class="text-pink-500">*</span></label>
-                            <input type="number" name="duration_days" value="{{ old('duration_days', $trip->duration_days) }}" min="1"
+                            <input type="text" inputmode="numeric" name="duration_days" value="{{ old('duration_days', $trip->duration_days) }}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                                    class="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 transition" required>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-1.5">Kuota <span class="text-pink-500">*</span></label>
-                            <input type="number" name="kuota" value="{{ old('kuota', $trip->kuota) }}" min="1"
-                                   placeholder="e.g. 20"
-                                   class="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-pink-500 transition" required>
-                        </div>
+
                     </div>
                 </div>
 
-                {{-- Status --}}
+                <div class="bg-gray-900 border border-white/5 rounded-2xl p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Jadwal Keberangkatan <span class="text-pink-500">*</span></h3>
+                        <button type="button" id="addDateBtn" class="text-xs flex items-center gap-1 text-pink-500 hover:text-pink-400 font-medium transition">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                            Tambah Tanggal
+                        </button>
+                    </div>
+                    <div id="trip-dates-container" class="space-y-2">
+                        @forelse($trip->tripDates as $tripDate)
+                        <div class="flex items-center gap-2 date-item">
+                            <input type="date" name="trip_dates[]" value="{{ $tripDate->date->format('Y-m-d') }}"
+                                   class="flex-1 px-4 py-2 bg-gray-800 border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 transition" required>
+                            <input type="text" inputmode="numeric" name="trip_kuotas[]" value="{{ $tripDate->kuota }}" placeholder="Kuota" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                   class="w-24 px-4 py-2 bg-gray-800 border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 transition" required>
+                            <button type="button" onclick="removeItem(this, '.date-item')" class="p-2 text-gray-500 hover:text-red-400 transition">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                            </button>
+                        </div>
+                        @empty
+                        <div class="flex items-center gap-2 date-item">
+                            <input type="date" name="trip_dates[]" 
+                                   class="flex-1 px-4 py-2 bg-gray-800 border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 transition" required>
+                            <input type="text" inputmode="numeric" name="trip_kuotas[]" placeholder="Kuota" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                   class="w-24 px-4 py-2 bg-gray-800 border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 transition" required>
+                            <button type="button" onclick="removeItem(this, '.date-item')" class="p-2 text-gray-500 hover:text-red-400 transition">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                            </button>
+                        </div>
+                        @endforelse
+                    </div>
+                    @error('trip_dates')<p class="text-red-400 text-xs mt-2">{{ $message }}</p>@enderror
+                </div>
+
                 <div class="bg-gray-900 border border-white/5 rounded-2xl p-6">
                     <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Publikasi</h3>
                     <div class="space-y-2">
@@ -189,6 +212,26 @@
     </form>
 
     <script>
+    function removeItem(el, selector) {
+        const item = el.closest(selector);
+        if (item) item.remove();
+    }
+
+    document.getElementById('addDateBtn').addEventListener('click', function() {
+        const container = document.getElementById('trip-dates-container');
+        container.insertAdjacentHTML('beforeend', `
+            <div class="flex items-center gap-2 date-item mt-2">
+                <input type="date" name="trip_dates[]" 
+                       class="flex-1 px-4 py-2 bg-gray-800 border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 transition" required>
+                <input type="text" inputmode="numeric" name="trip_kuotas[]" placeholder="Kuota" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                       class="w-24 px-4 py-2 bg-gray-800 border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 transition" required>
+                <button type="button" onclick="removeItem(this, '.date-item')" class="p-2 text-gray-500 hover:text-red-400 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                </button>
+            </div>
+        `);
+    });
+
     function previewImage(input) {
         if (!input.files[0]) return;
         const reader = new FileReader();
@@ -298,6 +341,5 @@
     });
     </script>
 
-    {{-- Leaflet JS --}}
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </x-admin-layout>

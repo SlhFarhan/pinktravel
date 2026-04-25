@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('destinations', function (Blueprint $table) {
-            $table->string('image')->nullable()->after('location');
+        Schema::create('trip_dates', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('trip_id')->constrained('trips')->onDelete('cascade');
+            $table->date('date');
+            $table->integer('kuota')->default(0);
+            $table->timestamps();
         });
     }
 
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('destinations', function (Blueprint $table) {
-            $table->dropColumn('image');
-        });
+        Schema::dropIfExists('trip_dates');
     }
 };

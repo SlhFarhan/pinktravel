@@ -20,7 +20,6 @@
         <div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
             <div class="max-w-6xl mx-auto">
 
-                {{-- Header --}}
                 <div class="flex items-center justify-between mb-8">
                     <div>
                         <h1 class="text-4xl font-bold text-gray-900">My Dashboard</h1>
@@ -32,7 +31,6 @@
                     </div>
                 </div>
 
-                {{-- Flash Messages --}}
                 @if (session('success'))
                     <div class="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
                         {{ session('success') }}
@@ -44,7 +42,6 @@
                     </div>
                 @endif
 
-                {{-- Navigation Tabs --}}
                 <div class="bg-white border-b border-gray-200 rounded-t-lg">
                     <div class="flex space-x-8 px-6 overflow-x-auto">
                         <button onclick="switchTab('dashboard', this)" class="tab-link active-tab px-4 py-4 text-gray-900 font-medium border-b-2 border-pink-600 whitespace-nowrap">
@@ -62,12 +59,9 @@
                     </div>
                 </div>
 
-                {{-- Tab Content --}}
                 <div class="bg-white rounded-b-lg shadow">
 
-                    {{-- Overview Tab --}}
                     <div id="dashboard-tab" class="tab-content p-6">
-                        {{-- Stat Cards --}}
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                             <div class="bg-gradient-to-br from-pink-50 to-pink-100 rounded-lg p-5 text-center">
                                 <p class="text-3xl font-bold text-pink-600">{{ $stats['total'] }}</p>
@@ -87,7 +81,6 @@
                             </div>
                         </div>
 
-                        {{-- Recent Activity --}}
                         <h3 class="text-xl font-bold text-gray-900 mb-4">Recent Activity</h3>
                         <div class="space-y-4">
                             @forelse ($recentBookings as $booking)
@@ -131,7 +124,6 @@
                         @endif
                     </div>
 
-                    {{-- Bookings Tab --}}
                     <div id="bookings-tab" class="tab-content hidden p-6">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="text-xl font-bold text-gray-900">My Bookings</h3>
@@ -181,7 +173,6 @@
                         </div>
                     </div>
 
-                    {{-- Wishlist Tab --}}
                     <div id="wishlist-tab" class="tab-content hidden p-6">
                         <h3 class="text-xl font-bold text-gray-900 mb-4">My Wishlist</h3>
                         <div id="wishlist-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -189,7 +180,6 @@
                         </div>
                     </div>
 
-                    {{-- Profile Tab --}}
                     <div id="profile-tab" class="tab-content hidden p-6">
                         <h3 class="text-xl font-bold text-gray-900 mb-6">My Profile & Settings</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">

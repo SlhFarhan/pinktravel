@@ -26,9 +26,9 @@ class BookingController extends Controller
      */
     public function create($tripId)
     {
-        $trip = Trip::findOrFail($tripId);
-        // Di awal belum ada tanggal dipilih, jadi kita lempar kuota maksimal
-        $availableSeats = $trip->kuota;
+        $trip = Trip::with('tripDates')->findOrFail($tripId);
+        // Di awal belum ada tanggal dipilih, jadi kita set default 0 sampai user pilih tanggal
+        $availableSeats = 0;
 
         return view('booking.create', [
             'trip' => $trip,
@@ -44,10 +44,19 @@ class BookingController extends Controller
         $validated = $request->validate([
             'trip_id' => 'required|exists:trips,id',
             'participants' => 'required|integer|min:1',
-            'preferred_date' => 'required|date|after_or_equal:today',
+            'preferred_date' => 'required|date',
             'phone' => 'required|string|min:10|max:15',
             'special_request' => 'nullable|string|max:500',
         ]);
+
+        // Validasi apakah tanggal yang dipilih benar-benar tersedia untuk trip ini
+        $isValidDate = \App\Models\TripDate::where('trip_id', $validated['trip_id'])
+            ->where('date', $validated['preferred_date'])
+            ->exists();
+
+        if (!$isValidDate) {
+            return back()->withInput()->with('error', 'Tanggal keberangkatan yang dipilih tidak valid atau sudah tidak tersedia.');
+        }
 
         try {
             $booking = $this->bookingService->createBooking(
@@ -72,6 +81,18 @@ class BookingController extends Controller
             'trip_id' => 'required|exists:trips,id',
             'date' => 'required|date'
         ]);
+
+        // Cek apakah tanggal tersedia
+        $isValidDate = \App\Models\TripDate::where('trip_id', $request->trip_id)
+            ->where('date', $request->date)
+            ->exists();
+
+        if (!$isValidDate) {
+            return response()->json([
+                'available_seats' => 0,
+                'message' => 'Tanggal tidak tersedia'
+            ]);
+        }
 
         $availableSeats = $this->bookingService->getAvailableSeatsForDate($request->trip_id, $request->date);
 

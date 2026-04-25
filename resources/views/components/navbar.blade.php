@@ -4,7 +4,6 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
 
-            {{-- ── Logo ────────────────────────────────────────────── --}}
             <a href="/" class="flex items-center gap-2.5 group flex-shrink-0">
                 <div class="w-9 h-9 bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl flex items-center justify-center shadow-lg shadow-pink-500/30 group-hover:scale-105 transition-transform duration-200">
                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -14,7 +13,6 @@
                 <span id="logoText" class="text-xl font-bold">PinkTravel</span>
             </a>
 
-            {{-- ── Desktop Menu ─────────────────────────────────────── --}}
             <div class="hidden md:flex items-center gap-1">
                 <a href="/" onclick="handleNavClick(event,'beranda')" class="nav-link relative px-4 py-2 font-medium text-sm cursor-pointer">
                     Beranda<span class="nav-link-underline"></span>
@@ -32,7 +30,6 @@
                 <div class="nav-divider w-px h-5 mx-2"></div>
 
                 @auth
-                    {{-- User Dropdown --}}
                     <div class="relative group">
                         <button class="nav-user-btn flex items-center gap-2 px-3 py-2 font-medium text-sm">
                             <div class="w-7 h-7 rounded-full bg-pink-500 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
@@ -43,7 +40,6 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                             </svg>
                         </button>
-                        {{-- Dropdown --}}
                         <div class="absolute right-0 top-full mt-2 w-52 bg-white rounded-2xl shadow-xl border border-gray-100
                                     opacity-0 invisible group-hover:opacity-100 group-hover:visible
                                     translate-y-2 group-hover:translate-y-0 transition-all duration-200 overflow-hidden z-50">
@@ -97,7 +93,6 @@
                 @endauth
             </div>
 
-            {{-- ── Mobile Hamburger ────────────────────────────────── --}}
             <button id="mobileMenuBtn" onclick="toggleMobileMenu()"
                     class="md:hidden p-2 rounded-xl hover:bg-white/10 transition">
                 <svg id="hamburgerIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -110,7 +105,6 @@
         </div>
     </div>
 
-    {{-- ── Mobile Menu ──────────────────────────────────────────── --}}
     <div id="mobileMenu" class="hidden md:hidden bg-gray-900/95 backdrop-blur-xl border-t border-white/10 px-4 py-4 space-y-1">
         <a href="/" onclick="handleNavClick(event,'beranda')" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/10 font-medium transition">🏠 Beranda</a>
         <a href="/" onclick="handleNavClick(event,'trips')"   class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/10 font-medium transition">✈️ Trips</a>

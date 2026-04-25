@@ -14,7 +14,6 @@
         </a>
     </div>
 
-    {{-- Grid Kartu Destinasi --}}
     @if($destinations->isEmpty())
         <div class="bg-gray-900 border border-white/5 rounded-2xl py-20 text-center">
             <div class="text-5xl mb-4">📍</div>
@@ -27,7 +26,6 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             @foreach($destinations as $destination)
             <div class="bg-gray-900 border border-white/5 rounded-2xl overflow-hidden group hover:border-pink-500/30 transition-colors">
-                {{-- Thumbnail --}}
                 <div class="relative h-44 bg-gray-800">
                     @if($destination->image)
                         <img src="{{ $destination->image }}" alt="{{ $destination->name }}"
@@ -35,7 +33,6 @@
                     @else
                         <div class="w-full h-full flex items-center justify-center text-5xl text-gray-700">📍</div>
                     @endif
-                    {{-- Status badge --}}
                     <div class="absolute top-3 right-3">
                         @if($destination->status === 'active')
                             <span class="px-2.5 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-bold rounded-full backdrop-blur-sm border border-emerald-500/30">Aktif</span>
@@ -45,7 +42,6 @@
                     </div>
                 </div>
 
-                {{-- Info --}}
                 <div class="p-4">
                     <h3 class="font-bold text-white text-sm mb-0.5">{{ $destination->name }}</h3>
                     <p class="text-xs text-pink-400 flex items-center gap-1 mb-2">
@@ -57,7 +53,6 @@
                     <p class="text-gray-500 text-xs line-clamp-2">{{ $destination->description }}</p>
                 </div>
 
-                {{-- Actions --}}
                 <div class="px-4 pb-4 flex gap-2">
                     <a href="{{ route('admin.destinations.edit', $destination->id) }}"
                        class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-lg transition">

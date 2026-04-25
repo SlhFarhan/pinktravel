@@ -84,11 +84,11 @@
                                     <div>
                                         <label for="participants" class="block text-sm font-bold text-gray-700 mb-3">Jumlah Peserta</label>
                                         <input 
-                                            type="number" 
+                                            type="text" 
+                                            inputmode="numeric"
                                             id="participants" 
                                             name="participants" 
-                                            min="1" 
-                                            max="{{ $availableSeats }}" 
+                                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                                             value="{{ old('participants', 1) }}"
                                             class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-pink-500 focus:bg-white transition-all @error('participants') border-red-500 @enderror disabled:opacity-50"
                                             required
@@ -96,25 +96,29 @@
                                         @error('participants')
                                             <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                         @enderror
-                                        <p id="max-participants-text" class="text-gray-500 text-sm mt-2 font-medium">Pilih tanggal untuk melihat sisa kuota (Maksimal trip ini: {{ $availableSeats }})</p>
+                                        <p id="max-participants-text" class="text-gray-500 text-sm mt-2 font-medium">Silakan pilih tanggal keberangkatan terlebih dahulu untuk melihat ketersediaan kursi.</p>
                                     </div>
 
                                     <!-- Preferred Date -->
                                     <div>
                                         <label for="preferred_date" class="block text-sm font-bold text-gray-700 mb-3">Tanggal Perjalanan yang Diinginkan</label>
-                                        <input 
-                                            type="date" 
+                                        <select 
                                             id="preferred_date" 
                                             name="preferred_date" 
-                                            value="{{ old('preferred_date') }}"
-                                            min="{{ date('Y-m-d') }}"
                                             class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-pink-500 focus:bg-white transition-all @error('preferred_date') border-red-500 @enderror"
                                             required
                                         >
+                                            <option value="" disabled {{ old('preferred_date') ? '' : 'selected' }}>Pilih tanggal keberangkatan...</option>
+                                            @foreach($trip->tripDates as $date)
+                                                <option value="{{ $date->date->format('Y-m-d') }}" {{ old('preferred_date') == $date->date->format('Y-m-d') ? 'selected' : '' }}>
+                                                    {{ $date->date->translatedFormat('l, d F Y') }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                         @error('preferred_date')
                                             <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                         @enderror
-                                        <p class="text-gray-500 text-sm mt-2 font-medium">Pilih tanggal untuk mengecek ketersediaan kursi.</p>
+                                        <p class="text-gray-500 text-sm mt-2 font-medium">Hanya tanggal di atas yang tersedia untuk paket trip ini.</p>
                                     </div>
 
                                     <!-- Phone Number -->

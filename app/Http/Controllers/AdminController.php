@@ -8,7 +8,7 @@ use App\Models\TripItinerary;
 use App\Models\TripInclude;
 use App\Models\TripExclude;
 use App\Models\Destination;
-use App\Models\CompanySetting;
+
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -69,9 +69,12 @@ class AdminController extends Controller
             'duration_days'   => 'required|integer|min:1',
             'image'           => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'status'          => 'required|in:active,inactive',
-            'kuota'           => 'required|integer|min:1',
             'latitude'        => 'nullable|numeric',
             'longitude'       => 'nullable|numeric',
+            'trip_dates'      => 'required|array|min:1',
+            'trip_dates.*'    => 'required|date',
+            'trip_kuotas'     => 'required|array|min:1',
+            'trip_kuotas.*'   => 'required|integer|min:1',
         ]);
 
         // Handle file upload
@@ -118,12 +121,23 @@ class AdminController extends Controller
             }
         }
 
+        // Trip Dates
+        if ($request->has('trip_dates')) {
+            foreach ($request->trip_dates as $index => $date) {
+                if (empty($date)) continue;
+                $trip->tripDates()->create([
+                    'date'  => $date,
+                    'kuota' => $request->trip_kuotas[$index] ?? 0
+                ]);
+            }
+        }
+
         return redirect()->route('admin.dashboard')->with('success', 'Trip "' . $trip->title . '" berhasil ditambahkan!');
     }
 
     public function editTrip($id)
     {
-        $trip = Trip::with(['itineraries', 'includes', 'excludes'])->findOrFail($id);
+        $trip = Trip::with(['itineraries', 'includes', 'excludes', 'tripDates'])->findOrFail($id);
         return view('admin.trips.edit', compact('trip'));
     }
 
@@ -143,9 +157,12 @@ class AdminController extends Controller
             'duration_days'   => 'required|integer|min:1',
             'image'           => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'status'          => 'required|in:active,inactive',
-            'kuota'           => 'required|integer|min:1',
             'latitude'        => 'nullable|numeric',
             'longitude'       => 'nullable|numeric',
+            'trip_dates'      => 'required|array|min:1',
+            'trip_dates.*'    => 'required|date',
+            'trip_kuotas'     => 'required|array|min:1',
+            'trip_kuotas.*'   => 'required|integer|min:1',
         ]);
 
         // Ambil path lama dari URL storage
@@ -162,6 +179,18 @@ class AdminController extends Controller
         }
 
         $trip->update($validated);
+
+        // Update Trip Dates
+        $trip->tripDates()->delete();
+        if ($request->has('trip_dates')) {
+            foreach ($request->trip_dates as $index => $date) {
+                if (empty($date)) continue;
+                $trip->tripDates()->create([
+                    'date'  => $date,
+                    'kuota' => $request->trip_kuotas[$index] ?? 0
+                ]);
+            }
+        }
 
         return redirect()->route('admin.dashboard')->with('success', 'Trip "' . $trip->title . '" berhasil diperbarui!');
     }
@@ -261,30 +290,7 @@ class AdminController extends Controller
         return redirect()->route('admin.destinations.dashboard')->with('success', 'Destinasi berhasil dihapus.');
     }
 
-    // ======== SETTINGS ========
 
-    public function settingsDashboard()
-    {
-        $settings = CompanySetting::all();
-        return view('admin.settings.dashboard', compact('settings'));
-    }
-
-    public function editSetting($id)
-    {
-        $setting = CompanySetting::findOrFail($id);
-        return view('admin.settings.edit', compact('setting'));
-    }
-
-    public function updateSetting(Request $request, $id)
-    {
-        $setting = CompanySetting::findOrFail($id);
-        $validated = $request->validate([
-            'value' => 'required|string',
-            'type'  => 'required|in:string,number,text,boolean,json',
-        ]);
-        $setting->update($validated);
-        return redirect()->route('admin.settings.dashboard')->with('success', 'Pengaturan berhasil diperbarui.');
-    }
 
     // ======== REVIEWS ========
 

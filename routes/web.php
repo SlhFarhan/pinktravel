@@ -70,11 +70,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/bookings', [AdminController::class, 'bookingsDashboard'])->name('admin.bookings.dashboard');
     Route::post('/bookings/{id}/complete', [AdminController::class, 'completeBooking'])->name('admin.bookings.complete');
 
-    // Settings
-    Route::get('/settings', [AdminController::class, 'settingsDashboard'])->name('admin.settings.dashboard');
-    Route::get('/settings/{id}/edit', [AdminController::class, 'editSetting'])->name('admin.settings.edit');
-    Route::put('/settings/{id}', [AdminController::class, 'updateSetting'])->name('admin.settings.update');
-
     // Reviews (approve/reject)
     Route::get('/reviews', [AdminController::class, 'reviewsDashboard'])->name('admin.reviews.dashboard');
     Route::put('/reviews/{id}/approve', [AdminController::class, 'approveReview'])->name('admin.reviews.approve');

@@ -21,7 +21,6 @@ class Trip extends Model
         'duration_days',
         'image',
         'status',
-        'kuota',
         'latitude',
         'longitude',
     ];
@@ -64,6 +63,11 @@ class Trip extends Model
     public function bookings()
     {
         return $this->hasMany(Booking::class);
+    }
+
+    public function tripDates()
+    {
+        return $this->hasMany(TripDate::class)->orderBy('date', 'asc');
     }
 }
 

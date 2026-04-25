@@ -16,6 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('trip_id');
             $table->integer('participants')->default(1)->comment('Jumlah peserta');
+            $table->date('preferred_date')->nullable()->comment('Tanggal perjalanan yang diinginkan');
+            $table->string('phone')->nullable()->comment('Nomor telepon kontak');
+            $table->text('special_request')->nullable()->comment('Catatan atau permintaan khusus');
             $table->decimal('total_price', 15, 2)->comment('Harga total dalam Rupiah');
             $table->enum('status', ['pending', 'confirmed', 'cancelled', 'completed'])->default('pending');
             $table->string('order_id')->unique()->comment('Format: PINK-{booking_id}-{timestamp}');

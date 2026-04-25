@@ -1,6 +1,5 @@
 <x-admin-layout title="Dashboard" active="trips">
 
-    {{-- ── Stat Cards ──────────────────────────────────────────────────── --}}
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         @php
         $cards = [
@@ -22,7 +21,6 @@
         @endforeach
     </div>
 
-    {{-- ── Header Actions ───────────────────────────────────────────────── --}}
     <div class="flex items-center justify-between mb-5">
         <div>
             <h2 class="text-lg font-bold text-white">Daftar Trip</h2>
@@ -37,7 +35,6 @@
         </a>
     </div>
 
-    {{-- ── Trips Table ──────────────────────────────────────────────────── --}}
     <div class="bg-gray-900 border border-white/5 rounded-2xl overflow-hidden">
         <table class="w-full text-sm">
             <thead>

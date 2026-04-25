@@ -1,6 +1,4 @@
 <x-admin-layout title="Manajemen Booking" active="bookings">
-
-    {{-- Summary Cards --}}
     @php
     $statusCfg = [
         'all'       => ['label' => 'Total',        'color' => 'gray',   'icon' => '📋'],
@@ -24,7 +22,6 @@
         @endforeach
     </div>
 
-    {{-- Filter Pills --}}
     <div class="flex flex-wrap gap-2 mb-5">
         @foreach($statusCfg as $key => $cfg)
         <a href="{{ route('admin.bookings.dashboard', ['status' => $key]) }}"
@@ -35,7 +32,6 @@
         @endforeach
     </div>
 
-    {{-- Table --}}
     <div class="bg-gray-900 border border-white/5 rounded-2xl overflow-hidden">
         <table class="w-full text-sm">
             <thead>

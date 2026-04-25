@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->validateCsrfTokens(except: [
             'midtrans-webhook',
+            '/midtrans-webhook',
         ]);
         $middleware->trustProxies(at: '*');
         $middleware->alias([

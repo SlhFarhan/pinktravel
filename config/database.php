@@ -96,9 +96,6 @@ return [
             'prefix_indexes' => true,
             'search_path' => 'public',
             'sslmode' => 'prefer',
-            'options' => [
-                \PDO::ATTR_SSL_MODE => \PDO::PGSQL_AS_SSL_PREFER,
-            ],
         ],
 
         'sqlsrv' => [

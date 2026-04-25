@@ -80,3 +80,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 Route::middleware(['auth', 'user'])->prefix('user')->group(function () {
     Route::get('/dashboard', [BookingController::class, 'userDashboard'])->name('user.dashboard');
 });
+
+Route::get('/cek-db', function () {
+    try {
+        \DB::connection()->getPdo();
+        return "Koneksi Database Berhasil!";
+    } catch (\Exception $e) {
+        return "Error Koneksi Database: " . $e->getMessage();
+    }
+});

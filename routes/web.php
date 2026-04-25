@@ -81,19 +81,4 @@ Route::middleware(['auth', 'user'])->prefix('user')->group(function () {
     Route::get('/dashboard', [BookingController::class, 'userDashboard'])->name('user.dashboard');
 });
 
-Route::get('/cek-db', function () {
-    try {
-        // Cek koneksi
-        \DB::connection()->getPdo();
-        $output = "Koneksi Database Berhasil!<br>";
 
-        // Jalankan migrasi otomatis
-        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
-        $output .= "Migrasi Berhasil Jalankan!<br>";
-        $output .= "<pre>" . \Illuminate\Support\Facades\Artisan::output() . "</pre>";
-
-        return $output;
-    } catch (\Exception $e) {
-        return "Error: " . $e->getMessage();
-    }
-});

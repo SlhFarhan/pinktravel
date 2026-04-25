@@ -1,180 +1,125 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-6xl mx-auto">
-        <div class="flex items-center justify-between mb-8">
-            <div>
-                <h1 class="text-4xl font-bold text-gray-900">Review Management</h1>
-                <p class="text-gray-600 mt-2">Moderate and manage user reviews</p>
-            </div>
-            <div class="text-right">
-                <div class="bg-yellow-100 text-yellow-800 px-4 py-2 rounded-lg">
-                    <p class="text-sm">Pending Reviews</p>
-                    <p class="text-2xl font-bold">{{ \App\Models\Review::where('status', 'pending')->count() }}</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white border-b border-gray-200 rounded-t-lg mb-6">
-            <div class="flex space-x-1 px-6">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex-shrink-0">
-                    <a href="/" class="text-2xl font-bold text-gray-900">
-                        ✈️ PinkTravel Admin
-                    </a>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <span class="text-gray-700">{{ auth()->user()->name }}</span>
-                    <form method="POST" action="{{ route('logout') }}" class="inline">
-                        @csrf
-                        <button type="submit" class="text-red-600 hover:text-red-800 font-medium">
-                            Logout
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <div class="pt-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center mb-8">
-                <div>
-                    <h1 class="text-4xl font-bold text-gray-900">💬 Kelola Review & Testimonial</h1>
-                    <p class="text-gray-600 mt-2">Approve atau tolak review dari traveler</p>
-                </div>
-                <div class="flex gap-4">
-                    <a href="{{ route('admin.dashboard') }}" class="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition font-semibold">
-                        Kembali
-                    </a>
-                </div>
-            </div>
-
-            <div class="flex gap-4 mb-8 border-b">
-                <button onclick="switchTab('pending')" id="tab-pending" class="px-4 py-2 border-b-2 border-teal-600 text-teal-600 font-semibold">
-                    ⏳ Menunggu Persetujuan
-                </button>
-                <button onclick="switchTab('approved')" id="tab-approved" class="px-4 py-2 text-gray-600 hover:text-teal-600 font-semibold">
-                    ✅ Disetujui
-                </button>
-                <button onclick="switchTab('rejected')" id="tab-rejected" class="px-4 py-2 text-gray-600 hover:text-teal-600 font-semibold">
-                    ❌ Ditolak
-                </button>
-            </div>
-
-            <div class="bg-white rounded-lg shadow overflow-hidden">
-                <div id="reviews-list" class="divide-y">
-                    <p class="text-gray-500 text-center py-8">Memuat reviews...</p>
-                </div>
-            </div>
-        </div>
+<x-admin-layout title="Manajemen Review" active="reviews">
+    <div class="mb-8">
+        <h2 class="text-2xl font-bold text-white">Manajemen Review</h2>
+        <p class="text-gray-500 mt-1">Moderasi ulasan dari para traveler PinkTravel</p>
     </div>
 
-    <script>
-        let allReviews = {
-            pending: [],
-            approved: [],
-            rejected: [],
-        };
-        let currentTab = 'pending';
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+        <a href="{{ route('admin.reviews.dashboard', ['status' => 'all']) }}" class="block group">
+            <div class="bg-gray-900/50 border {{ request('status', 'all') == 'all' ? 'border-pink-500/50 bg-pink-500/5' : 'border-white/5' }} p-6 rounded-2xl transition-all group-hover:border-pink-500/30">
+                <p class="text-gray-500 text-sm mb-1">Semua Review</p>
+                <h3 class="text-2xl font-bold text-white">{{ $allReviews->count() }}</h3>
+            </div>
+        </a>
+        <a href="{{ route('admin.reviews.dashboard', ['status' => 'pending']) }}" class="block group">
+            <div class="bg-gray-900/50 border {{ request('status') == 'pending' ? 'border-yellow-500/50 bg-yellow-500/5' : 'border-white/5' }} p-6 rounded-2xl transition-all group-hover:border-yellow-500/30">
+                <p class="text-gray-500 text-sm mb-1">Perlu Moderasi</p>
+                <h3 class="text-2xl font-bold text-white text-yellow-500">{{ $pendingReviews->count() }}</h3>
+            </div>
+        </a>
+        <a href="{{ route('admin.reviews.dashboard', ['status' => 'approved']) }}" class="block group">
+            <div class="bg-gray-900/50 border {{ request('status') == 'approved' ? 'border-emerald-500/50 bg-emerald-500/5' : 'border-white/5' }} p-6 rounded-2xl transition-all group-hover:border-emerald-500/30">
+                <p class="text-gray-500 text-sm mb-1">Disetujui</p>
+                <h3 class="text-2xl font-bold text-white text-emerald-500">{{ $approvedReviews->count() }}</h3>
+            </div>
+        </a>
+        <a href="{{ route('admin.reviews.dashboard', ['status' => 'rejected']) }}" class="block group">
+            <div class="bg-gray-900/50 border {{ request('status') == 'rejected' ? 'border-red-500/50 bg-red-500/5' : 'border-white/5' }} p-6 rounded-2xl transition-all group-hover:border-red-500/30">
+                <p class="text-gray-500 text-sm mb-1">Ditolak</p>
+                <h3 class="text-2xl font-bold text-white text-red-500">{{ $rejectedReviews->count() }}</h3>
+            </div>
+        </a>
+    </div>
 
-        document.addEventListener('DOMContentLoaded', function() {
-            loadReviews();
-        });
-
-        function switchTab(tab) {
-            currentTab = tab;
-            
-            // Update button styles
-            document.querySelectorAll('[id^="tab-"]').forEach(btn => btn.classList.remove('border-b-2', 'border-teal-600', 'text-teal-600'));
-            document.getElementById(`tab-${tab}`).classList.add('border-b-2', 'border-teal-600', 'text-teal-600');
-            
-            renderReviews();
-        }
-
-        async function loadReviews() {
-            try {
-                const response = await fetch('/api/reviews');
-                const reviews = await response.json();
-
-                // Group by status
-                allReviews = {
-                    pending: reviews.filter(r => r.status === 'pending'),
-                    approved: reviews.filter(r => r.status === 'approved'),
-                    rejected: reviews.filter(r => r.status === 'rejected'),
-                };
-
-                renderReviews();
-            } catch (error) {
-                console.error('Error loading reviews:', error);
-            }
-        }
-
-        function renderReviews() {
-            const reviews = allReviews[currentTab];
-            const container = document.getElementById('reviews-list');
-
-            if (reviews.length === 0) {
-                container.innerHTML = '<p class="text-gray-500 text-center py-8">Tidak ada review</p>';
-                return;
-            }
-
-            container.innerHTML = reviews.map(review => `
-                <div class="p-6 hover:bg-gray-50 transition">
-                    <div class="flex justify-between items-start mb-4">
-                        <div>
-                            <p class="font-semibold text-gray-900">${review.user.name}</p>
-                            <p class="text-sm text-gray-500">${new Date(review.created_at).toLocaleDateString('id-ID')}</p>
-                            <p class="text-sm text-gray-600 mt-1">
-                                ${review.reviewable_type.includes('Trip') ? '✈️ Trip' : '📍 Destination'}: 
-                                ${review.reviewable_type.includes('Trip') ? review.reviewable?.title : review.reviewable?.name}
+    <!-- Reviews Table -->
+    <div class="bg-gray-900/50 border border-white/5 rounded-2xl overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-white/5">
+                        <th class="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">User</th>
+                        <th class="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Trip / Destinasi</th>
+                        <th class="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Rating & Komentar</th>
+                        <th class="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider text-right">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                    @forelse($reviews as $review)
+                    <tr class="hover:bg-white/[0.02] transition-colors">
+                        <td class="px-6 py-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-pink-500/10 text-pink-500 flex items-center justify-center font-bold">
+                                    {{ substr($review->user->name ?? 'U', 0, 1) }}
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-white">{{ $review->user->name ?? 'Deleted User' }}</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">{{ $review->created_at->format('d M Y') }}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-6">
+                            <p class="text-sm font-medium text-white">{{ $review->reviewable?->title ?? $review->reviewable?->name ?? 'Item Deleted' }}</p>
+                            <span class="inline-block px-2 py-0.5 mt-1 bg-white/5 text-[10px] text-gray-400 rounded">
+                                {{ $review->reviewable_type ? str_replace('App\\Models\\', '', $review->reviewable_type) : 'N/A' }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-6">
+                            <div class="flex items-center gap-1 mb-2">
+                                @for($i = 1; $i <= 5; $i++)
+                                    <svg class="w-3.5 h-3.5 {{ $i <= $review->rating ? 'text-yellow-500' : 'text-gray-700' }}" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+                                    </svg>
+                                @endfor
+                            </div>
+                            <p class="text-sm text-gray-400 line-clamp-2 italic" style="max-width: 300px;">
+                                "{{ $review->comment }}"
                             </p>
-                        </div>
-                        <div class="text-2xl">${'⭐'.repeat(review.rating)}</div>
-                    </div>
-                    
-                    <p class="text-gray-700 mb-4">"${review.comment || 'Tidak ada komentar'}"</p>
+                        </td>
+                        <td class="px-6 py-6 text-sm">
+                            @if($review->status == 'pending')
+                                <span class="px-3 py-1 bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 rounded-full text-xs">Pending</span>
+                            @elseif($review->status == 'approved')
+                                <span class="px-3 py-1 bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 rounded-full text-xs">Approved</span>
+                            @else
+                                <span class="px-3 py-1 bg-red-500/10 text-red-500 border border-red-500/20 rounded-full text-xs">Rejected</span>
+                            @endif
+                        </td>
+                        <td class="px-6 py-6 text-right">
+                            <div class="flex items-center justify-end gap-2">
+                                @if($review->status != 'approved')
+                                <form action="{{ route('admin.reviews.approve', $review->id) }}" method="POST">
+                                    @csrf @method('PUT')
+                                    <button type="submit" class="p-2 bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-lg transition-all" title="Setujui Review">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                    </button>
+                                </form>
+                                @endif
 
-                    ${currentTab === 'pending' ? `
-                        <div class="flex gap-3">
-                            <button onclick="updateReviewStatus(${review.id}, 'approved')" class="px-4 py-2 bg-green-600 text-white rounded font-semibold hover:bg-green-700 transition">
-                                ✅ Setujui
-                            </button>
-                            <button onclick="updateReviewStatus(${review.id}, 'rejected')" class="px-4 py-2 bg-red-600 text-white rounded font-semibold hover:bg-red-700 transition">
-                                ❌ Tolak
-                            </button>
-                        </div>
-                    ` : ''}
-                </div>
-            `).join('');
-        }
-
-        async function updateReviewStatus(reviewId, status) {
-            try {
-                const response = await fetch(`/api/reviews/${reviewId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content,
-                    },
-                    body: JSON.stringify({
-                        status: status,
-                    }),
-                });
-
-                if (response.ok) {
-                    alert(`Review ${status === 'approved' ? 'disetujui' : 'ditolak'}!`);
-                    loadReviews();
-                } else {
-                    alert('Gagal update review');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Gagal update review');
-            }
-        }
-    </script>
-</body>
-</html>
+                                @if($review->status != 'rejected')
+                                <form action="{{ route('admin.reviews.reject', $review->id) }}" method="POST">
+                                    @csrf @method('PUT')
+                                    <button type="submit" class="p-2 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white rounded-lg transition-all" title="Tolak Review">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                    </button>
+                                </form>
+                                @endif
+                            </div>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="5" class="px-6 py-20 text-center">
+                            <div class="flex flex-col items-center gap-3">
+                                <svg class="w-12 h-12 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                                <p class="text-gray-500">Belum ada review untuk kategori ini.</p>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+</x-admin-layout>

@@ -85,14 +85,7 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'url' => (function() {
-                $url = env('DATABASE_URL', env('POSTGRES_URL'));
-                if (!$url) return null;
-                $host = parse_url($url, PHP_URL_HOST);
-                $endpoint = explode('.', $host)[0];
-                $separator = str_contains($url, '?') ? '&' : '?';
-                return $url . $separator . 'options=endpoint%3D' . $endpoint;
-            })(),
+            'url' => env('DATABASE_URL') ? (env('DATABASE_URL') . (strpos(env('DATABASE_URL'), '?') !== false ? '&' : '?') . 'options=endpoint%3D' . explode('.', parse_url(env('DATABASE_URL'), PHP_URL_HOST))[0]) : null,
             'charset' => env('DB_CHARSET', 'utf8'),
             'prefix' => '',
             'prefix_indexes' => true,
